@@ -29,9 +29,9 @@ public class ComboundWorExtractor {
 	static {
 		baseCheck = new HashMap<String, String>();
 		subCheck = new HashMap<String, String>();
+		baseCheck.put("JJ", "");
 		baseCheck.put("NNP", "");
 		baseCheck.put("NN", "");
-		baseCheck.put("JJ", "");
 		baseCheck.put("NNS", "");
 		baseCheck.put("NNPS", "");
 		
@@ -39,12 +39,10 @@ public class ComboundWorExtractor {
 		subCheck.put("NN", "");
 		subCheck.put("NNS", "");
 		subCheck.put("NNPS", "");
-		subCheck.put("VBG", "");
-		subCheck.put("RB", "");
 	}
 	
-	public Boolean baseCheck(ArrayList<CoreMyLabel> input, int index) {
-		return baseCheck.containsKey(input.get(index).getToken());
+	public Boolean baseCheck(ArrayList<CoreMyLabel> input, int pointer) {
+		return baseCheck.containsKey(input.get(pointer).getToken());
 	}
 
 	/**
@@ -55,12 +53,12 @@ public class ComboundWorExtractor {
 	 * @return the boolean
 	 */
 	
-	public Boolean subCheck(ArrayList<CoreMyLabel> input, int index) {
-		if (index == input.size()) {
+	public Boolean subCheck(ArrayList<CoreMyLabel> input, int pointer) {
+		if (pointer == input.size()) {
+			return false;
 		} else {
-			return subCheck.containsKey(input.get(index).getToken());
+			return subCheck.containsKey(input.get(pointer).getToken());
 		}
-		return false;
 	}
 
 	/**
@@ -74,10 +72,8 @@ public class ComboundWorExtractor {
 		CoreMyLabel coreMyLabel = input.get(i);
 		
 		coreMyLabel.setToken(tok);
-		coreMyLabel.setWord(
-				coreMyLabel.getWord() + " " + input.get(i + 1).getWord());
-		coreMyLabel.setToken((
-				coreMyLabel.getToken()));
+		coreMyLabel.setWord(coreMyLabel.getWord() + " " + input.get(i + 1).getWord());
+		coreMyLabel.setToken((coreMyLabel.getToken()));
 		input.remove(i + 1);
 		return input;
 	}
@@ -88,11 +84,11 @@ public class ComboundWorExtractor {
 	 * @param List<CoreLabel> the input
 	 * @return List<CoreLabel> the input
 	 */
-	public List<CoreMyLabel> generateIdenWords(ArrayList<CoreMyLabel> input) {
+	public List<CoreMyLabel> generatePhrases(ArrayList<CoreMyLabel> input) {
 		for (int i = 0; i < input.size(); i++) {
 			if (baseCheck(input, i)) {
 				if (subCheck(input, i + 1)) {
-				generateIdenWords(listAddRemove(input, i));
+				generatePhrases(listAddRemove(input, i));
 				}
 			}
 		}

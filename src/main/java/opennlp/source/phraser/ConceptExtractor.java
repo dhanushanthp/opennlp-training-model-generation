@@ -1,47 +1,53 @@
 package opennlp.source.phraser;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import opennlp.tools.postag.POSModel;
-import opennlp.tools.postag.POSSample;
 import opennlp.tools.postag.POSTaggerME;
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
-import opennlp.tools.tokenize.WhitespaceTokenizer;
+import opennlp.tools.tokenize.TokenizerME;
+import opennlp.tools.tokenize.TokenizerModel;
+import opennlp.tools.util.InvalidFormatException;
 
 
 public class ConceptExtractor{
 
 	private static final InputStream modelInParse;
 	private static final InputStream modelInSentence;
+	private static final InputStream modelInTokenizer;
 	private static final ComboundWorExtractor comboundWordExt = new ComboundWorExtractor();
 	private static POSModel posModel;
 	private static SentenceModel sentenceModel;
+	private static TokenizerModel tokenModel;
 	private static final HashMap<String, String> FILTER;
 
 	static {
 		modelInParse = ConceptExtractor.class.getResourceAsStream("/opennlp/en-pos-maxent.bin");
 		modelInSentence = ConceptExtractor.class.getResourceAsStream("/opennlp/en-sent.bin");
+		modelInTokenizer = ConceptExtractor.class.getResourceAsStream("/opennlp/en-token.bin");
 		FILTER = new HashMap<String, String>();
 		FILTER.put("NNP", null);
 		FILTER.put("NN", null);
 		FILTER.put("NNS", null);
-		FILTER.put("VBG", null);
 		FILTER.put("JJ", null);
 
 		try {
 			posModel = new POSModel(modelInParse);
 			sentenceModel = new SentenceModel(modelInSentence);
+			tokenModel = new TokenizerModel(modelInTokenizer);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private static String[] getTokens(String content) {
+	private static String[] getSentences(String content) {
 		String tokens[];
 
 		try {
@@ -56,21 +62,22 @@ public class ConceptExtractor{
 	}
 
 
-	private static Map<String, String> getParser(String input) {
+	private static Map<String, String> getParser(String input) throws InvalidFormatException, IOException {
+		
+		TokenizerME tokenizer = new TokenizerME(tokenModel);
+		POSTaggerME tagger = new POSTaggerME(posModel);
+		
 		List<CoreMyLabel> myList = new ArrayList<CoreMyLabel>();
-		POSTaggerME tagger;
 
-		tagger = new POSTaggerME(posModel);
-
-		POSSample combinedSet = null;
-		String whitespaceTokenizerLine[] = WhitespaceTokenizer.INSTANCE.tokenize(input);
-		combinedSet = new POSSample(whitespaceTokenizerLine, tagger.tag(whitespaceTokenizerLine));
-
-		for (int i = 0; i < combinedSet.getSentence().length; i++) {
-			myList.add(new CoreMyLabel(combinedSet.getSentence()[i], combinedSet.getTags()[i]));
+		String tokenedWords[] = tokenizer.tokenize(input);
+		String [] tags = tagger.tag(tokenedWords);
+		
+		for (int i = 0; i < tokenedWords.length; i++) {
+			myList.add(new CoreMyLabel(tokenedWords[i], tags[i]));
+			System.out.println(tokenedWords[i]+ " "+ tags[i]);
 		}
 
-		List<CoreMyLabel> tagListComp = comboundWordExt.generateIdenWords((ArrayList<CoreMyLabel>) myList);
+		List<CoreMyLabel> tagListComp = comboundWordExt.generatePhrases((ArrayList<CoreMyLabel>) myList);
 		Map<String, String> unique = new HashMap<String, String>();
 
 		/**
@@ -88,10 +95,13 @@ public class ConceptExtractor{
 		return unique;
 	}
 
-	public Map<String, String> getConcept(String input) {
+	public Map<String, String> getConcept(String input) throws InvalidFormatException, IOException {
 		Map<String, String> map = new HashMap<String, String>();
 
-			String[] sentences = getTokens(input);
+			String[] sentences = getSentences(input);
+			for (String string : sentences) {
+				System.out.println(string);
+			}
 			for (String sentence : sentences) {
 				if (!sentence.equals("")) {
 					map.putAll(getParser(sentence));
