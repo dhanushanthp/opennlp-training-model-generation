@@ -1,22 +1,17 @@
 package opennlp.source.chuncker.executor;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import opennlp.source.phraser.ComboundWorExtractor;
 import opennlp.source.phraser.ConceptExtractor;
 import opennlp.tools.chunker.ChunkerME;
 import opennlp.tools.chunker.ChunkerModel;
-import opennlp.tools.cmdline.postag.POSModelLoader;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSSample;
 import opennlp.tools.postag.POSTaggerME;
-import opennlp.tools.sentdetect.SentenceModel;
 import opennlp.tools.tokenize.WhitespaceTokenizer;
 import opennlp.tools.util.Span;
 /**

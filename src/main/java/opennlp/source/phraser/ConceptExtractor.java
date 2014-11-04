@@ -3,7 +3,6 @@ package opennlp.source.phraser;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,18 +46,32 @@ public class ConceptExtractor{
 		}
 	}
 
-	private static String[] getSentences(String content) {
-		String tokens[];
+	private static List<String> getSentences(String content) {
+		String sentences[];
+		List<String> listOfsentences = new ArrayList<String>();
 
 		try {
 			SentenceDetectorME sd = new SentenceDetectorME(sentenceModel);
-			tokens = sd.sentDetect(content);
+			sentences = sd.sentDetect(content);
 		} catch (Exception e) {
 			System.out.println("Error in : " + content);
 			throw new RuntimeException(e);
 		}
 
-		return tokens;
+		//TODO Here I assumed the sentence will only have one open and closed bracket. But in Actual
+		//Case sentence may have more than one open and close bracket. So that need to be fixed.
+		for (String sentence : sentences) {
+			if (sentence.contains("(")) {
+				int strBracket = sentence.indexOf('(');
+				int endBracket = sentence.indexOf(')');
+				listOfsentences.add(sentence.substring(strBracket+1,endBracket));
+				listOfsentences.add((sentence.substring(0,strBracket).concat(sentence.substring(endBracket+1,sentence.length()-1))));
+			}else{
+				listOfsentences.add(sentence);
+			}
+		}
+		
+		return listOfsentences;
 	}
 
 
@@ -98,7 +111,7 @@ public class ConceptExtractor{
 	public Map<String, String> getConcept(String input) throws InvalidFormatException, IOException {
 		Map<String, String> map = new HashMap<String, String>();
 
-			String[] sentences = getSentences(input);
+			List<String> sentences = getSentences(input);
 			for (String string : sentences) {
 				System.out.println(string);
 			}
