@@ -3,16 +3,20 @@ package opennlp.source.chuncker.executor;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import opennlp.source.phraser.ComboundWorExtractor;
+import opennlp.source.phraser.ConceptExtractor;
 import opennlp.tools.chunker.ChunkerME;
 import opennlp.tools.chunker.ChunkerModel;
 import opennlp.tools.cmdline.postag.POSModelLoader;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSSample;
 import opennlp.tools.postag.POSTaggerME;
+import opennlp.tools.sentdetect.SentenceModel;
 import opennlp.tools.tokenize.WhitespaceTokenizer;
 import opennlp.tools.util.Span;
 /**
@@ -22,14 +26,29 @@ import opennlp.tools.util.Span;
  * phrases according to the pattern.
  */
 public class Chuncker {
+	
+	private static final InputStream modelInParse;
+	private static final InputStream modelInChunker;
+	private static POSModel posModel;
+	private static ChunkerModel chunkerModel;
+	
+	static{
+		modelInParse = ConceptExtractor.class.getResourceAsStream("/opennlp/en-pos-maxent.bin");
+		modelInChunker = ConceptExtractor.class.getResourceAsStream("/opennlp/en-chunker.bin");
+		
+		try {
+			posModel = new POSModel(modelInParse);
+			chunkerModel = new ChunkerModel(modelInChunker);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static Map<String,String> getPhrases() throws IOException {
 		String input = "where as recessions are the results of adverse productivity shocks";
 		
-		POSModel modelPOS = new POSModelLoader().load(new File("en-pos-maxent.bin"));
-		ChunkerModel modelChunker = new ChunkerModel(new FileInputStream("en-chunker.bin"));
-		
-		POSTaggerME tagger = new POSTaggerME(modelPOS);
-		ChunkerME chunkerME = new ChunkerME(modelChunker);
+		POSTaggerME tagger = new POSTaggerME(posModel);
+		ChunkerME chunkerME = new ChunkerME(chunkerModel);
 		
 		String wordTokens[] = WhitespaceTokenizer.INSTANCE.tokenize(input);
 		String[] wordTags = tagger.tag(wordTokens);
