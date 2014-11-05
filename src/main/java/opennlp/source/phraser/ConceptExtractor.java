@@ -100,8 +100,8 @@ public class ConceptExtractor{
 
 		for (int i = 0; i < tagListComp.size(); i++) {
 			CoreMyLabel coreMyLabel = tagListComp.get(i);
-
-			if (FILTER.containsKey(coreMyLabel.getToken())) {
+			//Here I'm only adding if the word count greater than 2 split by space.
+			if (FILTER.containsKey(coreMyLabel.getToken()) && coreMyLabel.getWord().split("\\s").length > 1 ) {
 				unique.put(coreMyLabel.getWord(), coreMyLabel.getToken());
 			}
 		}
