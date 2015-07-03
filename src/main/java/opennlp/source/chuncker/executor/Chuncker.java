@@ -16,7 +16,7 @@ import opennlp.tools.tokenize.WhitespaceTokenizer;
 import opennlp.tools.util.Span;
 /**
  * @author Dhanushanth
- * Here the tokenised words and tags need to be pass in to 
+ * Here the tokenized words and tags need to be pass in to 
  * chunker as a input. Then the chunker able to generate the
  * phrases according to the pattern.
  */
@@ -29,7 +29,7 @@ public class Chuncker {
 	
 	static{
 		modelInParse = ConceptExtractor.class.getResourceAsStream("/opennlp/en-pos-maxent.bin");
-		modelInChunker = ConceptExtractor.class.getResourceAsStream("/opennlp/en-chunker.bin");
+		modelInChunker = ConceptExtractor.class.getResourceAsStream("/opennlp/my-chunker.bin");
 		
 		try {
 			posModel = new POSModel(modelInParse);
@@ -40,7 +40,7 @@ public class Chuncker {
 	}
 	
 	public static Map<String,String> getPhrases() throws IOException {
-		String input = "where as recessions are the results of adverse productivity shocks";
+		String input = "Neil Alden Armstrong (August 5, 1930 – August 25, 2012) was an American astronaut and the first person to walk on the Moon. He was also an aerospace engineer, naval aviator, test pilot, and university professor. Before becoming an astronaut, Armstrong was an officer in the U.S. Navy and served in the Korean War. ";
 		
 		POSTaggerME tagger = new POSTaggerME(posModel);
 		ChunkerME chunkerME = new ChunkerME(chunkerModel);
