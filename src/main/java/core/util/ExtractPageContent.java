@@ -8,7 +8,12 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
 import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
 import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
-
+/**
+ * 
+ * @author Dhanushanth
+ * Read the PDF file and pass as a pure text.
+ *
+ */
 public class ExtractPageContent {
 
 	public static final String PREFACE = "/home/dhanu/Desktop/0136114520-Source-Full_Good.pdf";

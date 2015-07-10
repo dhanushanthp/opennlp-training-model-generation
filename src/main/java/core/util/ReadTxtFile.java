@@ -4,7 +4,10 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
+/**
+ * @author Dhanushanth
+ * Extact text from a text file and do some text processing to clean the string.
+ */
 public class ReadTxtFile {
 	public static String getString() {
 

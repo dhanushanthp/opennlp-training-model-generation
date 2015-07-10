@@ -12,7 +12,7 @@ import opennlp.tools.tokenize.TokenizerModel;
 import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.Span;
 
-public class NameFinder {
+public class NameFinderO {
 	private static final InputStream modelInSentence;
 	private static final InputStream modelInToken;
 	private static TokenNameFinderModel sentenceModel;
@@ -30,13 +30,12 @@ public class NameFinder {
 	}
 
 	public static void main(String[] args) throws InvalidFormatException, IOException {
-		String input = "James B Stewart Common Sense column observes Apple, formerly market laggard, has far distanced Microsoft in share price since January 2014";
+		String input = "By Joel Rosenblatt Apple CEO Tim Cook personally fielded at least one Apple Store employee complaint about \"demoralising\" security searches.";
 		NameFinderME nameFinder = new NameFinderME(sentenceModel);
 		TokenizerME tokenizer = new TokenizerME(tokenModel);
 
 		String[] splitTest = tokenizer.tokenize(input);
 		Span[] sentences = nameFinder.find(splitTest);
-		System.out.println(Arrays.toString(sentences));
 		for (Span s : sentences) {
 			StringBuilder string = new StringBuilder();
 			for (int i = s.getStart(); i < s.getEnd(); i++) {

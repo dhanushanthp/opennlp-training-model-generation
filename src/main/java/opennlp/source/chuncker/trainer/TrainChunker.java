@@ -37,7 +37,7 @@ public class TrainChunker {
 
 		OutputStream modelOut = null;
 		try {
-		  modelOut = new BufferedOutputStream(new FileOutputStream("build-training-models/chunker/my-chunker.bin"));
+		  modelOut = new BufferedOutputStream(new FileOutputStream("src/main/resources/opennlp/my-chunker.bin"));
 		  model.serialize(modelOut);
 		} finally {
 		  if (modelOut != null)

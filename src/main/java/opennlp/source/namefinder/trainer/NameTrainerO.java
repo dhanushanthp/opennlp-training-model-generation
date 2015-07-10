@@ -15,7 +15,7 @@ import opennlp.tools.namefind.TokenNameFinderModel;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 
-public class NameTrainer {
+public class NameTrainerO {
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws IOException {
 		Charset charset = Charset.forName("UTF-8");
