@@ -1,8 +1,7 @@
 package opennlp.source.sentencer;
 
 import java.io.InputStream;
-import java.util.Arrays;
-
+import core.util.ReadTxtFile;
 import opennlp.source.phraser.ConceptExtractor;
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
@@ -25,9 +24,17 @@ public class SentenceDetector {
 		String sentences[] = sentenceDetector.sentDetect(input);
 		return sentences;
 	}
-	
+
 	public static void main(String[] args) {
-		String[] sentences = getSentences("I like to learn natural langauge processing. But I don't want some one come and say don't study!");
-		System.out.println(Arrays.toString(sentences));
+		// String[] sentences =
+		// getSentences("I like to learn natural langauge processing. But I don't want some one come and say don't study!");
+		String[] sentences = getSentences(ReadTxtFile.getString());
+		int count = 0;
+		for (String string : sentences) {
+			count ++;
+			System.out.println(string);	
+		}
+		System.out.println(count);
+		
 	}
 }

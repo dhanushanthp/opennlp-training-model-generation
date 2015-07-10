@@ -22,7 +22,7 @@ public class TrainChunker {
 	public static void main(String[] args) throws IOException {
 		Charset charset = Charset.forName("UTF-8");
 		ObjectStream<String> lineStream =
-		    new PlainTextByLineStream(new FileInputStream("en-chunker.train"),charset);
+		    new PlainTextByLineStream(new FileInputStream("build-training-models/chunker/en-chunker.train"),charset);
 		ObjectStream<ChunkSample> sampleStream = new ChunkSampleStream(lineStream);
 
 		ChunkerModel model;
@@ -37,7 +37,7 @@ public class TrainChunker {
 
 		OutputStream modelOut = null;
 		try {
-		  modelOut = new BufferedOutputStream(new FileOutputStream("my-chunker.bin"));
+		  modelOut = new BufferedOutputStream(new FileOutputStream("build-training-models/chunker/my-chunker.bin"));
 		  model.serialize(modelOut);
 		} finally {
 		  if (modelOut != null)
