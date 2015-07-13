@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
-import opennlp.source.phraser.ConceptExtractor;
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.namefind.TokenNameFinderModel;
 import opennlp.tools.tokenize.TokenizerME;
@@ -13,16 +12,16 @@ import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.Span;
 
 public class NameFinderO {
-	private static final InputStream modelInSentence;
+	private static final InputStream modelInName;
 	private static final InputStream modelInToken;
 	private static TokenNameFinderModel sentenceModel;
 	private static TokenizerModel tokenModel;
 
 	static {
-		modelInSentence = ConceptExtractor.class.getResourceAsStream("/opennlp/my-name-model.bin");
-		modelInToken = ConceptExtractor.class.getResourceAsStream("/opennlp/en-token.bin");
+		modelInName = NameFinderO.class.getResourceAsStream("/opennlp/my-name-model.bin");
+		modelInToken = NameFinderO.class.getResourceAsStream("/opennlp/en-token.bin");
 		try {
-			sentenceModel = new TokenNameFinderModel(modelInSentence);
+			sentenceModel = new TokenNameFinderModel(modelInName);
 			tokenModel = new TokenizerModel(modelInToken);
 		} catch (Exception e) {
 			e.printStackTrace();

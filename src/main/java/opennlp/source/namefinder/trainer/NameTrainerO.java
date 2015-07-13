@@ -32,7 +32,7 @@ public class NameTrainerO {
 
 		OutputStream modelOut = null;
 		try {
-			modelOut = new BufferedOutputStream(new FileOutputStream("build-training-models/ner/my-name-model.bin"));
+			modelOut = new BufferedOutputStream(new FileOutputStream("src/main/resources/opennlp/my-name-model.bin"));
 			model.serialize(modelOut);
 		} finally {
 			if (modelOut != null)

@@ -25,6 +25,8 @@ public class CreateTrainingDataMain {
 				}
 			}
 		});
+		
+		System.out.println("Process completed...");
 	}
 
 }
