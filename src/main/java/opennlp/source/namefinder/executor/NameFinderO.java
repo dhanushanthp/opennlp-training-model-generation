@@ -19,7 +19,7 @@ public class NameFinderO {
 	private static TokenizerModel tokenModel;
 
 	static {
-		modelInSentence = ConceptExtractor.class.getResourceAsStream("/opennlp/en-ner-person.bin");
+		modelInSentence = ConceptExtractor.class.getResourceAsStream("/opennlp/my-name-model.bin");
 		modelInToken = ConceptExtractor.class.getResourceAsStream("/opennlp/en-token.bin");
 		try {
 			sentenceModel = new TokenNameFinderModel(modelInSentence);
@@ -30,7 +30,7 @@ public class NameFinderO {
 	}
 
 	public static void main(String[] args) throws InvalidFormatException, IOException {
-		String input = "By Joel Rosenblatt Apple CEO Tim Cook personally fielded at least one Apple Store employee complaint about \"demoralising\" security searches.";
+		String input = "where the Kharijites insisted that the imamate is a right for each individual within the Islamic society. Later, some Muslim scholars, such as Amer al-Basri and Abu Hanifa, led movements of boycotting the rulers, paving the way to the waqf (endowments) tradition, which served as an alternative to and asylum from the centralized authorities of the emirs.";
 		NameFinderME nameFinder = new NameFinderME(sentenceModel);
 		TokenizerME tokenizer = new TokenizerME(tokenModel);
 

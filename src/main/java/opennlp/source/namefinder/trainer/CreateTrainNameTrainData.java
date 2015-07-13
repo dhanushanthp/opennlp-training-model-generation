@@ -1,4 +1,4 @@
-package standford.source.namefinder;
+package opennlp.source.namefinder.trainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import edu.stanford.nlp.ie.crf.CRFClassifier;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.util.Triple;
 
-public class NameFinderS {
+public class CreateTrainNameTrainData {
 	private static final AbstractSequenceClassifier<CoreLabel> classifier;
 
 	static {
@@ -16,8 +16,6 @@ public class NameFinderS {
 	}
 
 	public static String getOpenNLPTaggedText(String sentence) {
-		// String sentence =
-		// "By Joel Rosenblatt Apple CEO Tim Cook personally fielded at least one Apple Store employee complaint about \"demoralising\" security searches.";
 		List<Data> pointers = new ArrayList<Data>();
 
 		List<Triple<String, Integer, Integer>> output = classifier.classifyToCharacterOffsets(sentence);
@@ -25,24 +23,20 @@ public class NameFinderS {
 			if (triple.first.equals("PERSON")) {
 				pointers.add(new Data(triple.second, triple.third));
 				String name = sentence.substring(triple.second, triple.third).trim();
-				System.out.println(name);
+				// System.out.println("Person Name : " + name);
 			}
 		}
 
 		StringBuffer sb = new StringBuffer(sentence);
 		int offset = 0;
+		String extractionIdentifier = "person";
 		for (Data data : pointers) {
-			sb.insert(data.getStart() + offset, "<START:name> ");
-			sb.insert(data.getEnd() + 13 + offset, " <END>");
-			offset = offset + 19;
+			sb.insert(data.getStart() + offset, " <START:" + extractionIdentifier + "> ");
+			sb.insert(data.getEnd() + 10 + extractionIdentifier.length() + offset, " <END> ");
+			offset = offset + 17 + extractionIdentifier.length();
 		}
 
-		System.out.println(sb.toString());
 		return sb.toString();
-	}
-
-	public static void main(String[] args) {
-		getOpenNLPTaggedText("By Joel Rosenblatt Apple CEO Tim Cook personally fielded at least one Apple Store employee complaint about \"demoralising\" security searches.");
 	}
 }
 

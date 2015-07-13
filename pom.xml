@@ -4,6 +4,7 @@
 	<groupId>open.nlp.sample</groupId>
 	<artifactId>opennlp-samples</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<build>
 		<plugins>
 			<plugin>
@@ -15,6 +16,20 @@
 					<target>1.8</target>
 					<meminitial>2g</meminitial>
 					<maxmem>3g</maxmem>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<!-- <classpathPrefix>lib/</classpathPrefix> -->
+							<mainClass>opennlp.source.chuncker.trainer.CreateTrainingDataMain</mainClass>
+						</manifest>
+					</archive>
 				</configuration>
 			</plugin>
 		</plugins>
