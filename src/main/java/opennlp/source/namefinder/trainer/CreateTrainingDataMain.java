@@ -1,4 +1,4 @@
-package opennlp.source.chuncker.trainer;
+package opennlp.source.namefinder.trainer;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -6,7 +6,6 @@ import java.nio.file.Paths;
 
 import core.util.ReadTxtFile;
 import core.util.WriteFile;
-import opennlp.source.namefinder.trainer.CreateTrainNameTrainData;
 import opennlp.source.sentencer.SentenceDetector;
 
 public class CreateTrainingDataMain {
