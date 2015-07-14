@@ -30,7 +30,7 @@
 					<!-- MainClass in mainfest make a executable jar -->
 					<archive>
 						<manifest>
-							<mainClass>opennlp.source.chuncker.trainer.NameTrainerO</mainClass>
+							<mainClass>opennlp.source.namefinder.trainer.NameTrainerO</mainClass>
 						</manifest>
 					</archive>
 
