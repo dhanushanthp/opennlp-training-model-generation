@@ -19,7 +19,8 @@ public class NameTrainerO {
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws IOException {
 		Charset charset = Charset.forName("UTF-8");
-		ObjectStream<String> lineStream = new PlainTextByLineStream(new FileInputStream("build-training-models/ner/en-ner-person.train"), charset);
+//		ObjectStream<String> lineStream = new PlainTextByLineStream(new FileInputStream("build-training-models/ner/en-ner-person.train"), charset);
+		ObjectStream<String> lineStream = new PlainTextByLineStream(new FileInputStream("/opt/data-extractor/data/open-nlp-ner-models/en-ner-person.train"), charset);
 		ObjectStream<NameSample> sampleStream = new NameSampleDataStream(lineStream);
 
 		TokenNameFinderModel model;
@@ -32,7 +33,7 @@ public class NameTrainerO {
 
 		OutputStream modelOut = null;
 		try {
-			modelOut = new BufferedOutputStream(new FileOutputStream("src/main/resources/opennlp/my-name-model.bin"));
+			modelOut = new BufferedOutputStream(new FileOutputStream("/opt/data-extractor/data/open-nlp-ner-models/en-ner-person.bin"));
 			model.serialize(modelOut);
 		} finally {
 			if (modelOut != null)

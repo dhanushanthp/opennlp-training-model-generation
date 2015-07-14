@@ -14,10 +14,10 @@ import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
  * Read the PDF file and pass as a pure text.
  *
  */
-public class ExtractPageContent {
+public class ExtractPageContentPDF {
 
-	public static final String PREFACE = "/home/dhanu/Desktop/0136114520-Source-Full_Good.pdf";
-	public static final String RESULT = "/home/dhanu/Desktop/sampleOutput.txt";
+	public static final String PREFACE = "/opt/Collection/Books From Server/Abel-Economics/0136114520-Source-Full_Good.pdf";
+	public static final String RESULT = "/home/dhanu/Desktop/history-source-full_good.txt";
 
 	public void parsePdf(String pdf, String txt) throws IOException {
 		PdfReader reader = new PdfReader(pdf);
@@ -34,6 +34,6 @@ public class ExtractPageContent {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		new ExtractPageContent().parsePdf(PREFACE, RESULT);
+		new ExtractPageContentPDF().parsePdf(PREFACE, RESULT);
 	}
 }
