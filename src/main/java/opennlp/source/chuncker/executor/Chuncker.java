@@ -19,9 +19,10 @@ import opennlp.tools.tokenize.WhitespaceTokenizer;
 import opennlp.tools.util.Span;
 
 /**
- * @author Dhanushanth Here the tokenized words and tags need to be pass in to
- *         chunker as a input. Then the chunker able to generate the phrases
- *         according to the pattern.
+ * @author Dhanushanth 
+ * Here the tokenized words and tags need to be pass in to
+ * chunker as a input. Then the chunker able to generate the phrases
+ * according to the pattern.
  */
 public class Chuncker {
 	private static final Logger LOG = LoggerFactory.getLogger(Chuncker.class);
@@ -35,7 +36,6 @@ public class Chuncker {
 		modelInChunker = ConceptExtractor.class.getResourceAsStream("/opennlp/my-chunker.bin");
 
 		try {
-			LOG.info("Staring ...");
 			posModel = new POSModel(modelInParse);
 			chunkerModel = new ChunkerModel(modelInChunker);
 		} catch (Exception e) {
