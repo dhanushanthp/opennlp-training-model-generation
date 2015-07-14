@@ -33,7 +33,7 @@
 							<mainClass>opennlp.source.namefinder.trainer.NameTrainerO</mainClass>
 						</manifest>
 					</archive>
-
+					<finalName>ner-trainer.jar</finalName>
 				</configuration>
 				<executions>
 					<execution>
@@ -61,6 +61,7 @@
 							<mainClass>opennlp.source.namefinder.trainer.CreateTrainingDataMain</mainClass>
 						</manifest>
 					</archive>
+					<finalName>ner-creator.jar</finalName>
 				</configuration>
 				<executions>
 					<execution>
