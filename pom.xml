@@ -33,7 +33,7 @@
 							<mainClass>opennlp.source.namefinder.trainer.NameTrainerO</mainClass>
 						</manifest>
 					</archive>
-					<finalName>ner-trainer.jar</finalName>
+					<finalName>en-ner-trainer</finalName>
 				</configuration>
 				<executions>
 					<execution>
@@ -47,29 +47,34 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.4.1</version>
-				<configuration>
-					<!-- get all project dependencies -->
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-					<!-- MainClass in mainfest make a executable jar -->
-					<archive>
-						<manifest>
-							<mainClass>opennlp.source.namefinder.trainer.CreateTrainingDataMain</mainClass>
-						</manifest>
-					</archive>
-					<finalName>ner-creator.jar</finalName>
-				</configuration>
+				<groupId>org.dstovall</groupId>
+				<artifactId>onejar-maven-plugin</artifactId>
+				<version>1.4.4</version>
 				<executions>
 					<execution>
-						<id>make-assembly</id>
-						<!-- bind to the packaging phase -->
-						<phase>package</phase>
+						<id>build-first</id>
+						<configuration>
+							<mainClass>opennlp.source.namefinder.trainer.NameTrainerO</mainClass>
+							<attachToBuild>true</attachToBuild>
+							<classifier>onejar</classifier>
+							<filename>en-ner-trainer</filename>
+							<outputDirectory>/opt/model/trainer</outputDirectory>
+						</configuration>
 						<goals>
-							<goal>single</goal>
+							<goal>one-jar</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>build-second</id>
+						<configuration>
+							<mainClass>opennlp.source.namefinder.trainer.NameTrainerO</mainClass>
+							<attachToBuild>true</attachToBuild>
+							<classifier>onejar</classifier>
+							<filename>en-ner-creator</filename>
+							<outputDirectory>/opt/model/creator</outputDirectory>
+						</configuration>
+						<goals>
+							<goal>one-jar</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -100,4 +105,10 @@
 		</dependency>
 
 	</dependencies>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>onejar-maven-plugin.googlecode.com</id>
+			<url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
