@@ -15,14 +15,14 @@ public class ReadTxtFile {
 
 		String line = null;
 
-		StringBuffer sb = new StringBuffer();
+		StringBuffer junkText = new StringBuffer();
 		try {
 			FileReader fileReader = new FileReader(fileName);
 
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 
 			while ((line = bufferedReader.readLine()) != null) {
-				sb.append(line + " ");
+				junkText.append(line + " ");
 			}
 
 			bufferedReader.close();
@@ -32,7 +32,7 @@ public class ReadTxtFile {
 			System.out.println("Error reading file '" + fileName + "'");
 		}
 
-		return textCleaning(sb.toString());
+		return textCleaning(junkText.toString());
 	}
 	
 	public static String getXmlExtString(String fileName) {
