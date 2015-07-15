@@ -25,29 +25,30 @@ public class CreateTrainingData {
 	 * 
 	 * @param sentence
 	 *            is that we need to extract names.
-	 * @param extractionIdentifier
+	 * @param nerTrainingEntiry
 	 *            can be a person, organization etc. based on open-nlp train
 	 *            data requirement
 	 * @return result with the tagged sentence.
 	 */
-	public static String getOpenNLPTaggedText(String sentence, String extractionIdentifier) {
+	public static String getOpenNLPTaggedText(String sentence, String nerTrainingEntiry) {
 		List<Data> pointers = new ArrayList<Data>();
 
 		List<Triple<String, Integer, Integer>> output = classifier.classifyToCharacterOffsets(sentence);
 		for (Triple<String, Integer, Integer> triple : output) {
-			if (triple.first.equals(extractionIdentifier.toUpperCase())) {
+			if (triple.first.equals(nerTrainingEntiry.toUpperCase())) {
 				pointers.add(new Data(triple.second, triple.third));
-				LOG.debug(extractionIdentifier.toUpperCase() + " : " + sentence.substring(triple.second, triple.third).trim());
+				LOG.debug(nerTrainingEntiry.toUpperCase() + " : " + sentence.substring(triple.second, triple.third).trim());
 			}
 		}
 
 		StringBuffer sb = new StringBuffer(sentence);
 		int offset = 0;
 		for (Data data : pointers) {
-			sb.insert(data.getStart() + offset, " <START:" + extractionIdentifier + "> ");
-			sb.insert(data.getEnd() + 10 + extractionIdentifier.length() + offset, " <END> ");
-			offset = offset + 17 + extractionIdentifier.length();
+			sb.insert(data.getStart() + offset, " <START:" + nerTrainingEntiry + "> ");
+			sb.insert(data.getEnd() + 10 + nerTrainingEntiry.length() + offset, " <END> ");
+			offset = offset + 17 + nerTrainingEntiry.length();
 		}
+
 		/**
 		 * This line has been added to remove 2 added spaces in sentence after
 		 * the tagging. The tagging that we get without space because we have

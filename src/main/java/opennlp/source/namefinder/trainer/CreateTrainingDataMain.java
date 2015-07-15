@@ -17,22 +17,23 @@ public class CreateTrainingDataMain {
 	private static final Logger LOG = LoggerFactory.getLogger(CreateTrainingDataMain.class);
 
 	public static void main(String[] args) throws IOException {
+		LOG.debug("writing train data in to : " + Config.getTrainDataPath() + "en-ner-person.train");
+		
 		Files.walk(Paths.get(Config.getTextSourcePath())).forEach(filePath -> {
 			if (Files.isRegularFile(filePath)) {
-				LOG.debug("Processing : " + filePath.toString().replace(Config.getTextSourcePath(), ""));
+				LOG.debug("processing : " + filePath.toString().replace(Config.getTextSourcePath(), ""));
 
-				// Read XML
+				// Read XML and get pure text
 				String text = ReadTxtFile.getXmlExtString(filePath.toString());
 				String[] sentences = SentenceDetector.getSentences(text);
 				for (String sentence : sentences) {
-					String result = CreateTrainingData.getOpenNLPTaggedText(sentence, "person");
-					WriteFile.writeDataWithoutOverwrite("/opt/data-extractor/data/en-ner-person.train", result);
-					// System.out.println(result);
+					String result = CreateTrainingData.getOpenNLPTaggedText(sentence, Config.getNERTrainingEntity());
+					WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-ner-person.train", result);
 				}
 			}
 		});
 
-		System.out.println("Process completed...");
+		LOG.debug("completed training data extraction");
 	}
 
 }

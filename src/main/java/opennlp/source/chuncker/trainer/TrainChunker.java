@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 
+import core.util.Config;
 import opennlp.tools.chunker.ChunkSample;
 import opennlp.tools.chunker.ChunkSampleStream;
 import opennlp.tools.chunker.ChunkerME;
@@ -22,7 +23,7 @@ public class TrainChunker {
 	public static void main(String[] args) throws IOException {
 		Charset charset = Charset.forName("UTF-8");
 		ObjectStream<String> lineStream =
-		    new PlainTextByLineStream(new FileInputStream("build-training-models/chunker/en-chunker.train"),charset);
+		    new PlainTextByLineStream(new FileInputStream(Config.getTrainDataPath() + "en-chunker.train"),charset);
 		ObjectStream<ChunkSample> sampleStream = new ChunkSampleStream(lineStream);
 
 		ChunkerModel model;

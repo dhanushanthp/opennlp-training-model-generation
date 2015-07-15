@@ -24,4 +24,16 @@ public class Config {
 	public static String getTextSourcePath() {
 		return prop.getProperty("text-source-path");
 	}
+	
+	public static String getTrainDataPath() {
+		return prop.getProperty("en-ner-train-path");
+	}
+	
+	public static String getModelDataPath() {
+		return prop.getProperty("en-ner-model-path");
+	}
+	
+	public static String getNERTrainingEntity() {
+		return prop.getProperty("en-ner-train-entity");
+	}
 }
