@@ -28,7 +28,7 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>opennlp.source.chuncker.trainer.CreateChunkerTrainingDataO</mainClass>
+							<mainClass>opennlp.source.chuncker.trainer.CreateChunkerTrainingDataMain</mainClass>
 						</manifest>
 					</archive>
 					<finalName>en-chunker-trainer</finalName>

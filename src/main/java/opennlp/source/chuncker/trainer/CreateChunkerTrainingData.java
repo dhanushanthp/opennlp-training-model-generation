@@ -20,8 +20,8 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
 import opennlp.source.sentencer.SentenceDetector;
 
-public class CreateChunkerTrainingDataO {
-	private static final Logger LOG = LoggerFactory.getLogger(CreateChunkerTrainingDataO.class);
+public class CreateChunkerTrainingData {
+	private static final Logger LOG = LoggerFactory.getLogger(CreateChunkerTrainingData.class);
 	static Properties props = new Properties();
 	static StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
