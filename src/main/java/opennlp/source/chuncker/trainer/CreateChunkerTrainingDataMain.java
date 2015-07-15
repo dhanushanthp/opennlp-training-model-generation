@@ -35,10 +35,10 @@ public class CreateChunkerTrainingDataMain {
 
 	public static void main(String[] args) throws IOException {
 
-		LOG.debug("writing train data in to : " + Config.getTrainDataPath() + "en-ner-person.train");
+		LOG.debug("writing train data in to : " + Config.getTrainDataPath() + "en-chunker.train");
 
 		FileUtils.CreateMultiDirec(Config.getTrainDataPath());
-		
+
 		Files.walk(Paths.get(Config.getTextSourcePath())).forEach(filePath -> {
 			if (Files.isRegularFile(filePath)) {
 				LOG.debug("processing : " + filePath.toString().replace(Config.getTextSourcePath(), ""));
