@@ -1,4 +1,4 @@
-package opennlp.source.util;
+package core.util;
 
 import java.io.File;
 

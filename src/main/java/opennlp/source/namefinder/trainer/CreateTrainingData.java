@@ -20,13 +20,13 @@ public class CreateTrainingData {
 	}
 
 	/**
-	 * Result the sentence which tagged with extractionIdentifier
-	 * (person,organization etc.) This has been created using Standford CoreNLP.
+	 * Result the sentence which tagged with nerTrainingEntiry
+	 * (person,organization etc.) This has been created using Stanford CoreNLP.
 	 * 
 	 * @param sentence
 	 *            is that we need to extract names.
 	 * @param nerTrainingEntiry
-	 *            can be a person, organization etc. based on open-nlp train
+	 *            can be a person, organization etc. based on opennlp train
 	 *            data requirement
 	 * @return result with the tagged sentence.
 	 */

@@ -3,7 +3,7 @@ package opennlp.source.phraser;
 import java.io.IOException;
 import java.util.Map;
 
-import opennlp.source.util.readFile;
+import core.util.readFile;
 import opennlp.tools.util.InvalidFormatException;
 
 public class ConceptExtractorTest {
