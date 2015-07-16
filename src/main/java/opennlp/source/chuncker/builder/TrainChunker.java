@@ -1,4 +1,4 @@
-package opennlp.source.chuncker.trainer;
+package opennlp.source.chuncker.builder;
 
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;

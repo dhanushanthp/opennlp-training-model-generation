@@ -2,8 +2,6 @@ package opennlp.source.postagger;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-
 import opennlp.tools.cmdline.postag.POSModelLoader;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSSample;
@@ -12,7 +10,6 @@ import opennlp.tools.tokenize.WhitespaceTokenizer;
 
 public class PosTagger {
 	public static POSObj POSTag(String input) throws IOException {
-		// String input = "Dhanu not a correct way to implement it, isn't it?";
 		POSModel model = new POSModelLoader().load(new File("en-pos-maxent.bin"));
 		POSTaggerME tagger = new POSTaggerME(model);
 
@@ -29,5 +26,4 @@ public class PosTagger {
 		System.out.println(resu.getTags());
 		System.out.println(resu.getTokens());
 	}
-
 }

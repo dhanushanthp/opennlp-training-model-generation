@@ -1,4 +1,4 @@
-package opennlp.source.namefinder.trainer;
+package opennlp.source.namefinder.builder;
 
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
