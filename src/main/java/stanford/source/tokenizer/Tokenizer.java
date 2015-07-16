@@ -1,4 +1,4 @@
-package standford.source.tokenizer;
+package stanford.source.tokenizer;
 
 import java.io.IOException;
 import java.util.List;

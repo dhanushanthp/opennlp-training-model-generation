@@ -1,4 +1,4 @@
-package standford.source.namefinder;
+package stanford.source.namefinder;
 
 import java.util.ArrayList;
 import java.util.List;

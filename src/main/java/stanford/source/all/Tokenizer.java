@@ -1,4 +1,4 @@
-package standford.source.all;
+package stanford.source.all;
 
 import java.io.IOException;
 import java.util.List;
