@@ -38,7 +38,8 @@ public class TokenObjectCreator {
 	}
 
 	/**
-	 * Processing the compound words
+	 * Processing the compound words.
+	 * @see <a href="https://opennlp.apache.org/documentation/1.5.3/manual/opennlp.html#tools.chunker.training.tool">opennlp chunker training data Requirement</a>
 	 * 
 	 * @param List
 	 *            <CoreLabel> the input

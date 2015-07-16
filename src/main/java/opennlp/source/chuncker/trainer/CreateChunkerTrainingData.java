@@ -20,6 +20,12 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
 import opennlp.source.sentencer.SentenceDetector;
 
+/**
+ * This to test sample text with stanford nlp for chunker creation.
+ * 
+ * @author root
+ *
+ */
 public class CreateChunkerTrainingData {
 	private static final Logger LOG = LoggerFactory.getLogger(CreateChunkerTrainingData.class);
 	static Properties props = new Properties();
@@ -29,8 +35,7 @@ public class CreateChunkerTrainingData {
 		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
 	}
 
-	public static void main(String[] args) {
-		String wholeText = ReadTxtFile.getString(Config.getTextSourcePath());
+	public static void generateChunkerTrainData(String wholeText) {
 		String[] opennlpSentences = SentenceDetector.getSentences(wholeText);
 		for (String opennlpSentence : opennlpSentences) {
 
@@ -47,17 +52,22 @@ public class CreateChunkerTrainingData {
 				for (CoreLabel token : sentence.get(TokensAnnotation.class)) {
 					String word = token.get(TextAnnotation.class);
 					String pos = token.get(PartOfSpeechAnnotation.class);
-					LOG.debug(word + " : " + pos);
 					listOfTO.add(new TokenObject(word, pos));
 				}
 				List<TokenObject> response = TokenObjectCreator.generatePhrases(listOfTO);
 				for (TokenObject tokenObject : response) {
 					String result = tokenObject.getWord() + " " + tokenObject.getToken() + " " + tokenObject.getChunkerToken();
+					LOG.debug(result);
 					WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-chunker.train", result);
 				}
 				WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-chunker.train", "");
 			}
 		}
 
+	}
+
+	public static void main(String[] args) {
+		String wholeText = ReadTxtFile.getString(Config.getTextSourcePath());
+		CreateChunkerTrainingData.generateChunkerTrainData(wholeText);
 	}
 }
