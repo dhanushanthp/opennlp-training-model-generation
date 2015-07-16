@@ -30,7 +30,7 @@ public class CreateChunkerTrainingData {
 	}
 
 	public static void main(String[] args) {
-		String wholeText = ReadTxtFile.getString();
+		String wholeText = ReadTxtFile.getString(Config.getTextSourcePath());
 		String[] opennlpSentences = SentenceDetector.getSentences(wholeText);
 		for (String opennlpSentence : opennlpSentences) {
 

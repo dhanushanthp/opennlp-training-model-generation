@@ -35,7 +35,7 @@ public class CreateChunkerTrainingDataMain {
 
 	public static void main(String[] args) throws IOException {
 
-		LOG.debug("writing train data in to : " + Config.getTrainDataPath() + "en-chunker.train");
+		LOG.info("writing train data in to : " + Config.getTrainDataPath() + "en-chunker.train");
 
 		FileUtils.CreateMultiDirec(Config.getTrainDataPath());
 

@@ -28,7 +28,7 @@ public class SentenceDetector {
 	public static void main(String[] args) {
 		// String[] sentences =
 		// getSentences("I like to learn natural langauge processing. But I don't want some one come and say don't study!");
-		String[] sentences = getSentences(ReadTxtFile.getString());
+		String[] sentences = getSentences(ReadTxtFile.getString("build-training-models/TextFromBook.txt"));
 		int count = 0;
 		for (String string : sentences) {
 			count ++;

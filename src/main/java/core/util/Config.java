@@ -36,4 +36,8 @@ public class Config {
 	public static String getNERTrainingEntity() {
 		return prop.getProperty("en-ner-train-entity");
 	}
+	
+	public static String getPureTextFile() {
+		return prop.getProperty("text-file-path");
+	}
 }

@@ -9,10 +9,7 @@ import java.io.IOException;
  * Extract text from a text file and do some text processing to clean the string.
  */
 public class ReadTxtFile {
-	public static String getString() {
-
-		String fileName = "build-training-models/TextFromBook.txt";
-
+	public static String getString(String fileName) {
 		String line = null;
 
 		StringBuffer junkText = new StringBuffer();

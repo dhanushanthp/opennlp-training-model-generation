@@ -26,8 +26,8 @@ public class TrainChunker {
 
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws IOException {
-		LOG.debug("loading train data from : " + Config.getTrainDataPath() + "en-chunker.train");
-		LOG.debug("writing trained model to  : " + Config.getModelDataPath() + "en-chunker.bin");
+		LOG.info("loading train data from : " + Config.getTrainDataPath() + "en-chunker.train");
+		LOG.info("writing trained model to  : " + Config.getModelDataPath() + "en-chunker.bin");
 
 		FileUtils.CreateMultiDirec(Config.getModelDataPath());
 

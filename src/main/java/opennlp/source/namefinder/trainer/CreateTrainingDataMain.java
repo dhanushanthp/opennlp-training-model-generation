@@ -17,7 +17,7 @@ public class CreateTrainingDataMain {
 	private static final Logger LOG = LoggerFactory.getLogger(CreateTrainingDataMain.class);
 
 	public static void main(String[] args) throws IOException {
-		LOG.debug("writing train data in to : " + Config.getTrainDataPath() + "en-ner-person.train");
+		LOG.info("writing train data in to : " + Config.getTrainDataPath() + "en-ner-person.train");
 		
 		Files.walk(Paths.get(Config.getTextSourcePath())).forEach(filePath -> {
 			if (Files.isRegularFile(filePath)) {
