@@ -40,4 +40,8 @@ public class Config {
 	public static String getPureTextFile() {
 		return prop.getProperty("text-file-path");
 	}
+	
+	public static String getLogFilesPath() {
+		return prop.getProperty("log-file-path");
+	}
 }

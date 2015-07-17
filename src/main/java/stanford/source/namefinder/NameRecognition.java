@@ -3,12 +3,14 @@ package stanford.source.namefinder;
 import java.util.ArrayList;
 import java.util.List;
 
+import core.util.Config;
+import core.util.FileUtils;
 import edu.stanford.nlp.ie.AbstractSequenceClassifier;
 import edu.stanford.nlp.ie.crf.CRFClassifier;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.util.Triple;
 
-public class NameFinderS {
+public class NameRecognition {
 	private static final AbstractSequenceClassifier<CoreLabel> classifier;
 
 	static {
@@ -16,8 +18,6 @@ public class NameFinderS {
 	}
 
 	public static String getOpenNLPTaggedText(String sentence) {
-		// String sentence =
-		// "By Joel Rosenblatt Apple CEO Tim Cook personally fielded at least one Apple Store employee complaint about \"demoralising\" security searches.";
 		List<Data> pointers = new ArrayList<Data>();
 
 		List<Triple<String, Integer, Integer>> output = classifier.classifyToCharacterOffsets(sentence);
