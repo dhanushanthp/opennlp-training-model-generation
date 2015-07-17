@@ -26,8 +26,8 @@ import opennlp.source.sentencer.SentenceDetector;
  * @author root
  *
  */
-public class CreateChunkerTrainingData {
-	private static final Logger LOG = LoggerFactory.getLogger(CreateChunkerTrainingData.class);
+public class TrainingDataCreator {
+	private static final Logger LOG = LoggerFactory.getLogger(TrainingDataCreator.class);
 	static Properties props = new Properties();
 	static StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
@@ -68,6 +68,6 @@ public class CreateChunkerTrainingData {
 
 	public static void main(String[] args) {
 		String wholeText = ReadTxtFile.getString(Config.getTextSourcePath());
-		CreateChunkerTrainingData.generateChunkerTrainData(wholeText);
+		TrainingDataCreator.generateChunkerTrainData(wholeText);
 	}
 }

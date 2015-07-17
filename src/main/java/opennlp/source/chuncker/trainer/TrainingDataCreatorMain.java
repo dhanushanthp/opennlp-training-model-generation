@@ -24,8 +24,8 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
 import opennlp.source.sentencer.SentenceDetector;
 
-public class CreateChunkerTrainingDataMain {
-	private static final Logger LOG = LoggerFactory.getLogger(CreateChunkerTrainingDataMain.class);
+public class TrainingDataCreatorMain {
+	private static final Logger LOG = LoggerFactory.getLogger(TrainingDataCreatorMain.class);
 	static Properties props = new Properties();
 	static StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
@@ -46,7 +46,7 @@ public class CreateChunkerTrainingDataMain {
 
 				// Read XML and get pure text
 				String wholeText = ReadTxtFile.getXmlExtString(filePath.toString());
-				CreateChunkerTrainingData.generateChunkerTrainData(wholeText);
+				TrainingDataCreator.generateChunkerTrainData(wholeText);
 			}
 		});
 

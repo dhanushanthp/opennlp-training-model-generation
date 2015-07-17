@@ -20,14 +20,14 @@ import opennlp.tools.namefind.TokenNameFinderModel;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 
-public class NameTrainerO {
-	private static final Logger LOG = LoggerFactory.getLogger(NameTrainerO.class);
+public class NameModelBuilder {
+	private static final Logger LOG = LoggerFactory.getLogger(NameModelBuilder.class);
 
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws IOException {
 
-		LOG.debug("read train data from : " + Config.getTrainDataPath() + "en-ner-" + Config.getNERTrainingEntity() + ".train");
-		LOG.debug("writing trained model to  : " + Config.getModelDataPath() + "en-ner-" + Config.getNERTrainingEntity() + ".bin");
+		LOG.info("read train data from : " + Config.getTrainDataPath() + "en-ner-" + Config.getNERTrainingEntity() + ".train");
+		LOG.info("writing trained model to  : " + Config.getModelDataPath() + "en-ner-" + Config.getNERTrainingEntity() + ".bin");
 
 		FileUtils.CreateMultiDirec(Config.getModelDataPath());
 
@@ -39,16 +39,20 @@ public class NameTrainerO {
 		TokenNameFinderModel model;
 
 		try {
+			LOG.info("Loading training data from  : " + Config.getTrainDataPath() + "en-ner-" + Config.getNERTrainingEntity() + ".train");
 			model = NameFinderME.train("en", Config.getNERTrainingEntity(), objectStream, Collections.<String, Object> emptyMap(), 100, 5);
+			LOG.info("Loading training data completed");
 		} finally {
 			objectStream.close();
 		}
 
 		OutputStream modelOut = null;
 		try {
+			LOG.info("start writing the model to  : " + Config.getModelDataPath() + "en-ner-" + Config.getNERTrainingEntity() + ".bin");
 			modelOut = new BufferedOutputStream(new FileOutputStream(Config.getModelDataPath() + "en-ner-" + Config.getNERTrainingEntity()
 					+ ".bin"));
 			model.serialize(modelOut);
+			LOG.info("model Creation completed at  : " + Config.getModelDataPath() + "en-ner-" + Config.getNERTrainingEntity() + ".bin");
 		} finally {
 			if (modelOut != null)
 				modelOut.close();
