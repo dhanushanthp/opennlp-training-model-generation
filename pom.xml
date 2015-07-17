@@ -28,11 +28,11 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>opennlp.source.chuncker.trainer.CreateChunkerTrainingDataMain</mainClass>
+							<mainClass>opennlp.source.namefinder.builder.NameTrainerO</mainClass>
 						</manifest>
 					</archive>
-					<finalName>en-chunker-trainer</finalName>
-					<outputDirectory>/opt/model/trainer</outputDirectory>
+					<finalName>en-chunker-builder</finalName>
+					<outputDirectory>/opt/model/builder</outputDirectory>
 				</configuration>
 				<executions>
 					<execution>
