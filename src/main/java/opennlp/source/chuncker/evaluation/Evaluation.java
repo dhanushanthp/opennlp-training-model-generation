@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import opennlp.source.sentencer.SentenceDetector;
+import opennlp.source.tokenizer.Tokenizer;
 import opennlp.tools.chunker.ChunkerME;
 import opennlp.tools.chunker.ChunkerModel;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSSample;
 import opennlp.tools.postag.POSTaggerME;
-import opennlp.tools.tokenize.WhitespaceTokenizer;
 import opennlp.tools.util.Span;
 
 import org.slf4j.Logger;
@@ -80,7 +80,7 @@ public class Evaluation {
 		ChunkerME chunkerMEDefault = new ChunkerME(chunkerModelDefault);
 		ChunkerME chunkerME = new ChunkerME(chunkerModel);
 
-		String wordTokens[] = WhitespaceTokenizer.INSTANCE.tokenize(sentence);
+		String wordTokens[] = Tokenizer.getTokens(sentence);
 		String[] wordTags = tagger.tag(wordTokens);
 		List<String> phrasesDefault = new ArrayList<String>();
 		List<String> phrases = new ArrayList<String>();
