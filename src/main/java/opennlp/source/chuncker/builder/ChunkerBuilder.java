@@ -21,8 +21,8 @@ import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.TrainingParameters;
 
-public class TrainChunker {
-	private static final Logger LOG = LoggerFactory.getLogger(TrainChunker.class);
+public class ChunkerBuilder {
+	private static final Logger LOG = LoggerFactory.getLogger(ChunkerBuilder.class);
 
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws IOException {
