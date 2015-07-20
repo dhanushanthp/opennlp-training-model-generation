@@ -1,4 +1,4 @@
-package opennlp.source.postagger;
+package opennlp.source.pos.executor;
 
 public class POSObj {
 	private String[] tokens;

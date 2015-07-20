@@ -1,7 +1,9 @@
-package opennlp.source.postagger;
+package opennlp.source.pos.executor;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+
 import opennlp.tools.cmdline.postag.POSModelLoader;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSSample;
@@ -23,7 +25,7 @@ public class PosTagger {
 
 	public static void main(String[] args) throws IOException {
 		POSObj resu = POSTag("And the way algorithms implemented is so nice.");
-		System.out.println(resu.getTags());
-		System.out.println(resu.getTokens());
+		System.out.println(Arrays.toString(resu.getTags()));
+		System.out.println(Arrays.toString(resu.getTokens()));
 	}
 }
