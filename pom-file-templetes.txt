@@ -33,7 +33,7 @@
 	</descriptorRefs>
 	<archive>
 		<manifest>
-			<mainClass>opennlp.source.chuncker.trainer.ChunkerTrainingThreaded</mainClass>
+			<mainClass>opennlp.source.chuncker.trainer.ChunkerThreadedTraining</mainClass>
 		</manifest>
 	</archive>
 	<finalName>en-chunker-thread-trainer</finalName>
@@ -61,7 +61,7 @@
 	</descriptorRefs>
 	<archive>
 		<manifest>
-			<mainClass>opennlp.source.namefinder.trainer.NerTrainingThreaded</mainClass>
+			<mainClass>opennlp.source.namefinder.trainer.NerThreadedTraining</mainClass>
 		</manifest>
 	</archive>
 	<finalName>en-ner-thread-trainer</finalName>

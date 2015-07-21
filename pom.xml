@@ -28,7 +28,7 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>opennlp.source.chuncker.trainer.ChunkerTrainingThreaded</mainClass>
+							<mainClass>opennlp.source.chuncker.trainer.ChunkerThreadedTraining</mainClass>
 						</manifest>
 					</archive>
 					<finalName>en-chunker-thread-trainer</finalName>
