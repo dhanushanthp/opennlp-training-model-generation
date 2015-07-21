@@ -35,7 +35,7 @@ public class TrainingDataCreator {
 		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
 	}
 
-	public static void generateChunkerTrainData(String wholeText, int id) {
+	public static void generateChunkerTrainData(String wholeText, String id) {
 		String[] opennlpSentences = SentenceDetector.getSentences(wholeText);
 		for (String opennlpSentence : opennlpSentences) {
 
@@ -68,6 +68,6 @@ public class TrainingDataCreator {
 
 	public static void main(String[] args) {
 		String wholeText = ReadTxtFile.getString(Config.getTextSourcePath());
-		TrainingDataCreator.generateChunkerTrainData(wholeText, 0);
+		TrainingDataCreator.generateChunkerTrainData(wholeText, "");
 	}
 }
