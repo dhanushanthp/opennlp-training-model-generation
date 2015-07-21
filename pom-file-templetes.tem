@@ -12,6 +12,19 @@
 	<outputDirectory>/opt/model/builder</outputDirectory>
 </configuration>
 
+<!-- chunker trainer  -->
+<configuration>
+	<descriptorRefs>
+		<descriptorRef>jar-with-dependencies</descriptorRef>
+	</descriptorRefs>
+	<archive>
+		<manifest>
+			<mainClass>opennlp.source.chuncker.trainer.TrainingDataCreatorMain</mainClass>
+		</manifest>
+	</archive>
+	<finalName>en-chunker-trainer</finalName>
+	<outputDirectory>/opt/model/trainer</outputDirectory>
+</configuration>
 
 <!-- ner trainer  -->
 <configuration>
