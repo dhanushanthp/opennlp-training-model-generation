@@ -1,0 +1,42 @@
+<!-- chunker  -->
+<configuration>
+	<descriptorRefs>
+		<descriptorRef>jar-with-dependencies</descriptorRef>
+	</descriptorRefs>
+	<archive>
+		<manifest>
+			<mainClass>opennlp.source.chuncker.builder.ChunkerBuilder</mainClass>
+		</manifest>
+	</archive>
+	<finalName>en-chunker-builder</finalName>
+	<outputDirectory>/opt/model/builder</outputDirectory>
+</configuration>
+
+
+<!-- ner trainer  -->
+<configuration>
+	<descriptorRefs>
+		<descriptorRef>jar-with-dependencies</descriptorRef>
+	</descriptorRefs>
+	<archive>
+		<manifest>
+			<mainClass>opennlp.source.namefinder.trainer.CreateTrainingDataMain</mainClass>
+		</manifest>
+	</archive>
+	<finalName>en-ner-trainer</finalName>
+	<outputDirectory>/opt/model/trainer</outputDirectory>
+</configuration>
+
+<!-- ner builder  -->
+<configuration>
+	<descriptorRefs>
+		<descriptorRef>jar-with-dependencies</descriptorRef>
+	</descriptorRefs>
+	<archive>
+		<manifest>
+			<mainClass>opennlp.source.namefinder.builder.NameModelBuilder</mainClass>
+		</manifest>
+	</archive>
+	<finalName>en-ner-builder</finalName>
+	<outputDirectory>/opt/model/builder</outputDirectory>
+</configuration>

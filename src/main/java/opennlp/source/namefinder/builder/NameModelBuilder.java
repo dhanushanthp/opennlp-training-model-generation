@@ -40,7 +40,7 @@ public class NameModelBuilder {
 
 		try {
 			LOG.info("Loading training data from  : " + Config.getTrainDataPath() + "en-ner-" + Config.getNERTrainingEntity() + ".train");
-			model = NameFinderME.train("en", Config.getNERTrainingEntity(), objectStream, Collections.<String, Object> emptyMap(), 100, 5);
+			model = NameFinderME.train("en", Config.getNERTrainingEntity(), objectStream, Collections.<String, Object> emptyMap(), 80, 5);
 			LOG.info("Loading training data completed");
 		} finally {
 			objectStream.close();
