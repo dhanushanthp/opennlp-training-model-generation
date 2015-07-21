@@ -26,6 +26,20 @@
 	<outputDirectory>/opt/model/trainer</outputDirectory>
 </configuration>
 
+<!-- chunker trainer  threaded-->
+<configuration>
+	<descriptorRefs>
+		<descriptorRef>jar-with-dependencies</descriptorRef>
+	</descriptorRefs>
+	<archive>
+		<manifest>
+			<mainClass>opennlp.source.chuncker.trainer.ChunkerTrainingThreaded</mainClass>
+		</manifest>
+	</archive>
+	<finalName>en-chunker-thread-trainer</finalName>
+	<outputDirectory>/opt/model/trainer</outputDirectory>
+</configuration>
+
 <!-- ner trainer  -->
 <configuration>
 	<descriptorRefs>
