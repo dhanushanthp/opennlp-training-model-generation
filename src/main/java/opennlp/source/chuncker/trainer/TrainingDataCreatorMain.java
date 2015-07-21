@@ -40,7 +40,7 @@ public class TrainingDataCreatorMain {
 
 		FileUtils.CreateMultiDirec(Config.getTrainDataPath());
 
-		Files.walk(Paths.get(Config.getTextSourcePath())).forEach(filePath -> {
+		Files.walk(Paths.get(Config.getTextSourcePath()+args[0]+"/")).forEach(filePath -> {
 			if (Files.isRegularFile(filePath)) {
 				LOG.debug("processing : " + filePath.toString().replace(Config.getTextSourcePath(), ""));
 
