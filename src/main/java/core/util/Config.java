@@ -24,24 +24,28 @@ public class Config {
 	public static String getTextSourcePath() {
 		return prop.getProperty("text-source-path");
 	}
-	
+
 	public static String getTrainDataPath() {
 		return prop.getProperty("en-ner-train-path");
 	}
-	
+
 	public static String getModelDataPath() {
 		return prop.getProperty("en-ner-model-path");
 	}
-	
+
 	public static String getNERTrainingEntity() {
 		return prop.getProperty("en-ner-train-entity");
 	}
-	
+
 	public static String getPureTextFile() {
 		return prop.getProperty("text-file-path");
 	}
-	
+
 	public static String getLogFilesPath() {
 		return prop.getProperty("log-file-path");
+	}
+
+	public static int getNumberOfThread() {
+		return Integer.parseInt(prop.getProperty("number-of-threads"));
 	}
 }

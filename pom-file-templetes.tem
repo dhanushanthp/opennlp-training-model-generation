@@ -40,6 +40,20 @@
 	<outputDirectory>/opt/model/trainer</outputDirectory>
 </configuration>
 
+<!-- ner trainer  threaded-->
+<configuration>
+	<descriptorRefs>
+		<descriptorRef>jar-with-dependencies</descriptorRef>
+	</descriptorRefs>
+	<archive>
+		<manifest>
+			<mainClass>opennlp.source.namefinder.trainer.NerTrainingThreaded</mainClass>
+		</manifest>
+	</archive>
+	<finalName>en-ner-thread-trainer</finalName>
+	<outputDirectory>/opt/model/trainer</outputDirectory>
+</configuration>
+
 <!-- ner builder  -->
 <configuration>
 	<descriptorRefs>

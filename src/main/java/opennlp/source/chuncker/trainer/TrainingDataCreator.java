@@ -35,7 +35,7 @@ public class TrainingDataCreator {
 		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
 	}
 
-	public static void generateChunkerTrainData(String wholeText) {
+	public static void generateChunkerTrainData(String wholeText, int id) {
 		String[] opennlpSentences = SentenceDetector.getSentences(wholeText);
 		for (String opennlpSentence : opennlpSentences) {
 
@@ -58,9 +58,9 @@ public class TrainingDataCreator {
 				for (TokenObject tokenObject : response) {
 					String result = tokenObject.getWord() + " " + tokenObject.getToken() + " " + tokenObject.getChunkerToken();
 					LOG.debug(result);
-					WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-chunker.train", result);
+					WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-chunker-" + id + ".train", result);
 				}
-				WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-chunker.train", "");
+				WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-chunker-" + id + ".train", "");
 			}
 		}
 
@@ -68,6 +68,6 @@ public class TrainingDataCreator {
 
 	public static void main(String[] args) {
 		String wholeText = ReadTxtFile.getString(Config.getTextSourcePath());
-		TrainingDataCreator.generateChunkerTrainData(wholeText);
+		TrainingDataCreator.generateChunkerTrainData(wholeText, 0);
 	}
 }

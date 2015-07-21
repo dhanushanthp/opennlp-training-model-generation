@@ -46,7 +46,7 @@ public class TrainingDataCreatorMain {
 
 				// Read XML and get pure text
 				String wholeText = ReadTxtFile.getXmlExtString(filePath.toString());
-				TrainingDataCreator.generateChunkerTrainData(wholeText);
+				TrainingDataCreator.generateChunkerTrainData(wholeText,0);
 			}
 		});
 
