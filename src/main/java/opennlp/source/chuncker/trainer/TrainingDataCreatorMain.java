@@ -36,7 +36,7 @@ public class TrainingDataCreatorMain {
 
 	public static void main(String[] args) throws IOException {
 
-		LOG.info("writing train data in to : " + Config.getTrainDataPath() + "en-chunker.train");
+		LOG.info("writing train data in to : " + Config.getTrainDataPath() + "en-chunker-"+Config.getNumberOfThread()+".train");
 
 		FileUtils.CreateMultiDirec(Config.getTrainDataPath());
 
@@ -46,7 +46,7 @@ public class TrainingDataCreatorMain {
 
 				// Read XML and get pure text
 				String wholeText = ReadTxtFile.getXmlExtString(filePath.toString());
-				TrainingDataCreator.generateChunkerTrainData(wholeText,0);
+				TrainingDataCreator.generateChunkerTrainData(wholeText,Config.getNumberOfThread());
 			}
 		});
 
