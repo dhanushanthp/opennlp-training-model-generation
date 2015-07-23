@@ -26,7 +26,7 @@ class ExecureThread implements Runnable {
 	public void run() {
 		for (Path path : filePaths) {
 			String wholeText = ReadTxtFile.getXmlExtString(path.toString());
-			TrainingDataCreator.generateChunkerTrainData(wholeText, id);
+			TrainingDataCreatorStanford.generateChunkerTrainData(wholeText, "");
 		}
 	}
 }

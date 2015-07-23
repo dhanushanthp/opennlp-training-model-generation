@@ -26,8 +26,8 @@ import opennlp.source.sentencer.SentenceDetector;
  * @author root
  *
  */
-public class TrainingDataCreator {
-	private static final Logger LOG = LoggerFactory.getLogger(TrainingDataCreator.class);
+public class TrainingDataCreatorOpenNlp {
+	private static final Logger LOG = LoggerFactory.getLogger(TrainingDataCreatorOpenNlp.class);
 	static Properties props = new Properties();
 	static StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
@@ -35,7 +35,7 @@ public class TrainingDataCreator {
 		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
 	}
 
-	public static void generateChunkerTrainData(String wholeText, int id) {
+	public static void generateChunkerTrainData(String wholeText, String args) {
 		String[] opennlpSentences = SentenceDetector.getSentences(wholeText);
 		for (String opennlpSentence : opennlpSentences) {
 
@@ -58,16 +58,15 @@ public class TrainingDataCreator {
 				for (TokenObject tokenObject : response) {
 					String result = tokenObject.getWord() + " " + tokenObject.getToken() + " " + tokenObject.getChunkerToken();
 					LOG.debug(result);
-					WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-chunker-" + id + ".train", result);
+					WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-chunker-" + args + ".train", result);
 				}
-				WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-chunker-" + id + ".train", "");
+				WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-chunker-" + args + ".train", "");
 			}
 		}
-
 	}
 
 	public static void main(String[] args) {
 		String wholeText = ReadTxtFile.getString(Config.getTextSourcePath());
-		TrainingDataCreator.generateChunkerTrainData(wholeText, 0);
+		TrainingDataCreatorOpenNlp.generateChunkerTrainData(wholeText, "");
 	}
 }

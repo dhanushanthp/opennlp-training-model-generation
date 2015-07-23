@@ -40,13 +40,13 @@ public class TrainingDataCreatorMain {
 
 		FileUtils.CreateMultiDirec(Config.getTrainDataPath());
 
-		Files.walk(Paths.get(Config.getTextSourcePath())).forEach(filePath -> {
+		Files.walk(Paths.get(Config.getTextSourcePath()+args[0])).forEach(filePath -> {
 			if (Files.isRegularFile(filePath)) {
-				LOG.debug("processing : " + filePath.toString().replace(Config.getTextSourcePath(), ""));
+				LOG.debug("processing file: " + filePath.toString().replace(Config.getTextSourcePath() + args[0] + "/" , ""));
 
 				// Read XML and get pure text
 				String wholeText = ReadTxtFile.getXmlExtString(filePath.toString());
-				TrainingDataCreator.generateChunkerTrainData(wholeText,0);
+				TrainingDataCreatorStanford.generateChunkerTrainData(wholeText,args[0]);
 			}
 		});
 

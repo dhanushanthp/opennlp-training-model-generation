@@ -30,7 +30,7 @@ public class TokenObjectCreator {
 		baseCheck.put("NN", "");
 		baseCheck.put("NNS", "");
 		baseCheck.put("NNPS", "");
-		baseCheck.put("CD", "");
+//		baseCheck.put("CD", "");
 	}
 
 	public static Boolean baseCheck(ArrayList<TokenObject> input, int pointer) {
