@@ -3,8 +3,6 @@ package opennlp.source.chuncker.trainer;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 import org.slf4j.Logger;
@@ -13,16 +11,7 @@ import org.slf4j.LoggerFactory;
 import core.util.Config;
 import core.util.FileUtils;
 import core.util.ReadTxtFile;
-import core.util.WriteFile;
-import edu.stanford.nlp.ling.CoreLabel;
-import edu.stanford.nlp.ling.CoreAnnotations.PartOfSpeechAnnotation;
-import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
-import edu.stanford.nlp.ling.CoreAnnotations.TextAnnotation;
-import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
-import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
-import edu.stanford.nlp.util.CoreMap;
-import opennlp.source.sentencer.SentenceDetector;
 
 public class TrainingDataCreatorMain {
 	private static final Logger LOG = LoggerFactory.getLogger(TrainingDataCreatorMain.class);
@@ -35,18 +24,17 @@ public class TrainingDataCreatorMain {
 	}
 
 	public static void main(String[] args) throws IOException {
-		String nameChanger = Config.getTextSourcePath().replace("/opt/data-extractor/data/wikidata/pages/", "");
-		LOG.info("writing train data in to : " + Config.getTrainDataPath() + "en-chunker-"+nameChanger+".train");
+		LOG.info("writing train data in to : " + Config.getTrainDataPath() + "en-chunker-" + args[0] + ".train");
 
 		FileUtils.CreateMultiDirec(Config.getTrainDataPath());
-		Files.walk(Paths.get(Config.getTextSourcePath()+args[0])).forEach(filePath -> {
+		Files.walk(Paths.get(Config.getTextSourcePath() + args[0])).forEach(filePath -> {
 
 			if (Files.isRegularFile(filePath)) {
-				LOG.debug("processing file: " + filePath.toString().replace(Config.getTextSourcePath() + args[0] + "/" , ""));
+				LOG.debug("processing file: " + filePath.toString().replace(Config.getTextSourcePath() + args[0] + "/", ""));
 
 				// Read XML and get pure text
 				String wholeText = ReadTxtFile.getXmlExtString(filePath.toString());
-				TrainingDataCreatorStanford.generateChunkerTrainData(wholeText,args[0]);
+				TrainingDataCreatorStanford.generateChunkerTrainData(wholeText, args[0]);
 			}
 		});
 
