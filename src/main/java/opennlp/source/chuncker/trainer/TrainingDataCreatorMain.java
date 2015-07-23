@@ -35,12 +35,12 @@ public class TrainingDataCreatorMain {
 	}
 
 	public static void main(String[] args) throws IOException {
-
-		LOG.info("writing train data in to : " + Config.getTrainDataPath() + "en-chunker.train");
+		String nameChanger = Config.getTextSourcePath().replace("/opt/data-extractor/data/wikidata/pages/", "");
+		LOG.info("writing train data in to : " + Config.getTrainDataPath() + "en-chunker-"+nameChanger+".train");
 
 		FileUtils.CreateMultiDirec(Config.getTrainDataPath());
-
 		Files.walk(Paths.get(Config.getTextSourcePath()+args[0])).forEach(filePath -> {
+
 			if (Files.isRegularFile(filePath)) {
 				LOG.debug("processing file: " + filePath.toString().replace(Config.getTextSourcePath() + args[0] + "/" , ""));
 
