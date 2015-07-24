@@ -1,5 +1,6 @@
 package opennlp.source.chuncker.trainer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -35,7 +36,7 @@ public class TrainingDataCreatorStanford {
 		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
 	}
 
-	public static void generateChunkerTrainData(String wholeText, String args) {
+	public static void generateChunkerTrainData(String wholeText, String args) throws IOException {
 		String[] opennlpSentences = SentenceDetector.getSentences(wholeText);
 		for (String opennlpSentence : opennlpSentences) {
 
@@ -56,7 +57,7 @@ public class TrainingDataCreatorStanford {
 				}
 				List<TokenObject> response = TokenObjectCreator.generatePhrases(listOfTO);
 				for (TokenObject tokenObject : response) {
-					String result = tokenObject.getWord() + " " + tokenObject.getToken() + " " + tokenObject.getChunkerToken();
+					String result = tokenObject.getToken() + " " + tokenObject.getPOS() + " " + tokenObject.getChunkerToken();
 					LOG.debug(result);
 					WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-chunker-" + args + ".train", result);
 				}
@@ -65,7 +66,7 @@ public class TrainingDataCreatorStanford {
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		String wholeText = ReadTxtFile.getString(Config.getTextSourcePath());
 		TrainingDataCreatorStanford.generateChunkerTrainData(wholeText, "");
 	}

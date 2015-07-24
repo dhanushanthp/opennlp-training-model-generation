@@ -1,63 +1,48 @@
 package opennlp.source.pos.builder;
 
-import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
+import opennlp.source.chuncker.trainer.TokenObject;
 import opennlp.tools.postag.POSModel;
-import opennlp.tools.postag.POSSample;
 import opennlp.tools.postag.POSTaggerME;
-import opennlp.tools.postag.WordTagSampleStream;
-import opennlp.tools.util.ObjectStream;
-import opennlp.tools.util.PlainTextByLineStream;
-import opennlp.tools.util.TrainingParameters;
-
+import opennlp.tools.tokenize.WhitespaceTokenizer;
+/**
+ * Create part-of-speech tags using opennlp
+ * @author root
+ *
+ */
 public class PosBuilder {
-	public static void main(String[] args) {
-		POSModel model = null;
+	static InputStream modelIn = null;
+	static POSModel model = null;
 
-		InputStream dataIn = null;
+	public static List<TokenObject> getPOSTags(String sentence) {
+		List<TokenObject> response = new ArrayList<TokenObject>();
 		try {
-			dataIn = new FileInputStream("en-pos.train");
-			ObjectStream<String> lineStream = new PlainTextByLineStream(dataIn, "UTF-8");
-			ObjectStream<POSSample> sampleStream = new WordTagSampleStream(lineStream);
-
-			model = POSTaggerME.train("en", sampleStream, TrainingParameters.defaultParams(), null, null);
+			modelIn = new FileInputStream("en-pos-maxent.bin");
+			model = new POSModel(modelIn);
 		} catch (IOException e) {
-			// Failed to read or parse training data, training failed
 			e.printStackTrace();
 		} finally {
-			if (dataIn != null) {
+			if (modelIn != null) {
 				try {
-					dataIn.close();
+					modelIn.close();
 				} catch (IOException e) {
-					// Not an issue, training already finished.
-					// The exception should be logged and investigated
-					// if part of a production system.
-					e.printStackTrace();
 				}
 			}
 		}
-		OutputStream modelOut = null;
-		try {
-			modelOut = new BufferedOutputStream(new FileOutputStream(""));
-			model.serialize(modelOut);
-		} catch (IOException e) {
-			// Failed to save model
-			e.printStackTrace();
-		} finally {
-			if (modelOut != null) {
-				try {
-					modelOut.close();
-				} catch (IOException e) {
-					// Failed to correctly save model.
-					// Written model might be invalid.
-					e.printStackTrace();
-				}
-			}
+		
+		POSTaggerME tagger = new POSTaggerME(model);
+		String[] tokens = WhitespaceTokenizer.INSTANCE.tokenize(sentence);
+		String tags[] = tagger.tag(tokens);
+
+		for (int i = 0; i < tags.length; i++) {
+			response.add(new TokenObject(tokens[i], tags[i]));
 		}
+
+		return response;
 	}
 }

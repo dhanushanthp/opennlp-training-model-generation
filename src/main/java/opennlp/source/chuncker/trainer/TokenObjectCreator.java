@@ -1,8 +1,13 @@
 package opennlp.source.chuncker.trainer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+
+import core.util.LoadStopWords;
 
 /**
  * 
@@ -30,22 +35,26 @@ public class TokenObjectCreator {
 		baseCheck.put("NN", "");
 		baseCheck.put("NNS", "");
 		baseCheck.put("NNPS", "");
-//		baseCheck.put("CD", "");
+		// baseCheck.put("CD", "");
 	}
 
 	public static Boolean baseCheck(ArrayList<TokenObject> input, int pointer) {
-		return baseCheck.containsKey(input.get(pointer).getToken());
+		return baseCheck.containsKey(input.get(pointer).getPOS());
 	}
 
 	/**
 	 * Processing the compound words.
-	 * @see <a href="https://opennlp.apache.org/documentation/1.5.3/manual/opennlp.html#tools.chunker.training.tool">opennlp chunker training data Requirement</a>
+	 * 
+	 * @see <a
+	 *      href="https://opennlp.apache.org/documentation/1.5.3/manual/opennlp.html#tools.chunker.training.tool">opennlp
+	 *      chunker training data Requirement</a>
 	 * 
 	 * @param List
 	 *            <CoreLabel> the input
 	 * @return List<CoreLabel> the input
+	 * @throws IOException 
 	 */
-	public static List<TokenObject> generatePhrases(ArrayList<TokenObject> input) {
+	public static List<TokenObject> generatePhrases(ArrayList<TokenObject> input) throws IOException {
 		for (int i = 0; i < input.size(); i++) {
 			if (baseCheck(input, i)) {
 				input.get(i).setChunkerToken("B-NP");
@@ -54,9 +63,54 @@ public class TokenObjectCreator {
 					input.get(i).setChunkerToken("I-NP");
 					i = i + 1;
 				}
-				i = i-1;
+				i = i - 1;
 			} else {
 				input.get(i).setChunkerToken("O");
+			}
+		}
+
+		for (int i = 0; i < input.size(); i++) {
+			
+			if(input.get(i).getToken().length() < 2){
+				input.get(i).setChunkerToken("O");
+			}
+			
+			if(input.get(i).getToken().charAt(0) == '-'){
+				input.get(i).setChunkerToken("O");
+			}
+			
+			/**
+			 * If there is only adjective comes.
+			 */
+			if(input.get(i).getPOS().equals("JJ") && input.get(i).getChunkerToken().equals("B-NP")){
+				if (i == input.size() - 1) {
+					input.get(i).setChunkerToken("O");
+				}else if(input.get(i+1).getChunkerToken().equals("O")){
+					input.get(i).setChunkerToken("O");					
+				}
+			}
+			
+			/**
+			 * Stop words removal
+			 */
+			if(LoadStopWords.getAllStopWords().contains(input.get(i).getToken().trim().toLowerCase()) &&  input.get(i).getChunkerToken().equals("B-NP") ){
+				if (i == input.size() - 1) {
+					input.get(i).setChunkerToken("O");
+				}else if(input.get(i+1).getChunkerToken().equals("I-NP")){
+					input.get(i).setChunkerToken("O");
+					input.get(i+1).setChunkerToken("B-NP");					
+				}
+			}
+			
+			if (!StringUtils.isAlpha(input.get(i).getToken()) && input.get(i).getChunkerToken().equals("B-NP")) {
+				if (!input.get(i).getToken().contains("-")) {
+					input.get(i).setChunkerToken("O");
+					if (i < input.size() - 1) {
+						if (input.get(i + 1).getChunkerToken().equals("I-NP")) {
+							input.get(i + 1).setChunkerToken("B-NP");
+						}
+					}
+				}
 			}
 		}
 		return input;

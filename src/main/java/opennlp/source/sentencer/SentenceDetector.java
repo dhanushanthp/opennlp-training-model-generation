@@ -20,8 +20,9 @@ public class SentenceDetector {
 	}
 
 	public static String[] getSentences(String input) {
-		SentenceDetectorME sentenceDetector = new SentenceDetectorME(sentenceModel);
-		String sentences[] = sentenceDetector.sentDetect(input);
+//		SentenceDetectorME sentenceDetector = new SentenceDetectorME(sentenceModel);
+//		String sentences[] = sentenceDetector.sentDetect(input);
+		String sentences[] = input.split("[,.:;?\"()\u201D]");
 		return sentences;
 	}
 

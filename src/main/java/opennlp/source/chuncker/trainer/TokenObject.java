@@ -1,44 +1,44 @@
 package opennlp.source.chuncker.trainer;
 
 public class TokenObject {
-	private String word;
 	private String token;
+	private String posTag;
 	private String ChunkerToken;
-
-	public String getWord() {
-		return word;
-	}
-
-	public void setWord(String word) {
-		this.word = word.toLowerCase();
-	}
 
 	public String getToken() {
 		return token;
 	}
 
 	public void setToken(String token) {
-		this.token = token;
+		this.token = token.toLowerCase();
 	}
 
-	public TokenObject(String word, String token) {
-		this.word = word.toLowerCase();
-		this.token = token;
+	public String getPOS() {
+		return posTag;
+	}
+
+	public void setPOS(String token) {
+		this.posTag = token;
+	}
+
+	public TokenObject(String token, String pos) {
+		this.token = token.toLowerCase();
+		this.posTag = pos;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		return word.equals(((TokenObject) obj).word);
+		return token.equals(((TokenObject) obj).token);
 	}
 
 	@Override
 	public int hashCode() {
-		return word.length();
+		return token.length();
 	}
 
 	@Override
 	public String toString() {
-		return word + " " + token + " " + ChunkerToken;
+		return token + " " + posTag + " " + ChunkerToken;
 	}
 
 	public String getChunkerToken() {

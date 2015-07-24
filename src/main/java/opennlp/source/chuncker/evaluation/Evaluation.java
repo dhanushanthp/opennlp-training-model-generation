@@ -150,9 +150,7 @@ public class Evaluation {
 	}
 
 	public static void main(String[] args) {
-		String input = "Neil Alden Armstrong (August 5, 1930 – August 25, 2012) was an American astronaut and the first person to walk on the Moon. "
-				+ "He was also an aerospace engineer , naval aviator , test pilot , and university professor. "
-				+ "Before becoming an astronaut, Armstrong was an officer in the U.S. Navy and served in the Korean War. ";
+		String input = " Price liberalization thus took place in the context of 10% annual GDP growth rates and no output fall was ever observed";
 		// String input =
 		// "I like to learn natural language processing and the artificial intellegence";
 		try {

@@ -48,4 +48,8 @@ public class Config {
 	public static int getNumberOfThread() {
 		return Integer.parseInt(prop.getProperty("number-of-threads"));
 	}
+	
+	public static String getStopWordsPath() {
+		return prop.getProperty("stop-words-dir-path");
+	}
 }
