@@ -42,13 +42,12 @@ public class Tokenizer {
 					if (!StringUtils.isAlphanumeric(word)) {
 						sb.append("<SPLIT>" + word.replaceAll("``", "“").replaceAll("''", "”"));
 					} else {
-						sb.append(" " +word);
+						sb.append(" " + word);
 					}
 				}
 				String result = sb.toString().replaceAll("<SPLIT>“", "“<SPLIT>").trim();
 				System.out.println(result);
-				// WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath()
-				// + "en-token.train", result);
+				WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-token.train", result);
 			}
 		}
 
