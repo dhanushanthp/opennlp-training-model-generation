@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
+import core.util.Config;
 import core.util.ReadTxtFile;
+import core.util.WriteFile;
 import opennlp.source.sentencer.SentenceDetector;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.ling.CoreAnnotations.PartOfSpeechAnnotation;
@@ -44,7 +46,9 @@ public class PosTrainer {
 					sb.append(word + "_" + pos + " ");
 				}
 			}
-			System.out.println(sb.toString().replaceAll("``", "“").replaceAll("''", "”").trim());
+			String result = sb.toString().replaceAll("``", "“").replaceAll("''", "”").trim();
+			System.out.println(result);
+			WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-pos.train", result);
 		}
 
 	}
