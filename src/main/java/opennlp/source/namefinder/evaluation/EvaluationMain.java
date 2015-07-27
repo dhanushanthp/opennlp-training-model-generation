@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import core.util.Config;
 import core.util.ReadTxtFile;
-import opennlp.source.sentencer.SentenceDetector;
+import opennlp.source.sentencer.executor.SentenceDetector;
 
 public class EvaluationMain {
 

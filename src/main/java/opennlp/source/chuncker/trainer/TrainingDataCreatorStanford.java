@@ -19,7 +19,7 @@ import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
-import opennlp.source.sentencer.SentenceDetector;
+import opennlp.source.sentencer.executor.SentenceDetector;
 
 /**
  * This to test sample text with stanford nlp for chunker creation.

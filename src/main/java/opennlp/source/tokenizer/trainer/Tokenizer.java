@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
-import opennlp.source.sentencer.SentenceDetector;
+import opennlp.source.sentencer.executor.SentenceDetector;
 
 import org.apache.commons.lang3.StringUtils;
 

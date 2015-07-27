@@ -7,7 +7,7 @@ import java.util.Properties;
 import core.util.Config;
 import core.util.ReadTxtFile;
 import core.util.WriteFile;
-import opennlp.source.sentencer.SentenceDetector;
+import opennlp.source.sentencer.executor.SentenceDetector;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.ling.CoreAnnotations.PartOfSpeechAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;

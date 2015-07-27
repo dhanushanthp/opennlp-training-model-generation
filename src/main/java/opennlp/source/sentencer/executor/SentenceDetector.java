@@ -1,4 +1,4 @@
-package opennlp.source.sentencer;
+package opennlp.source.sentencer.executor;
 
 import java.io.InputStream;
 import core.util.ReadTxtFile;

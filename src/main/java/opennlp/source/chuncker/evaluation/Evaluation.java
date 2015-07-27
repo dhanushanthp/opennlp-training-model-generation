@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import opennlp.source.sentencer.SentenceDetector;
+import opennlp.source.sentencer.executor.SentenceDetector;
 import opennlp.source.tokenizer.executor.Tokenizer;
 import opennlp.tools.chunker.ChunkerME;
 import opennlp.tools.chunker.ChunkerModel;
