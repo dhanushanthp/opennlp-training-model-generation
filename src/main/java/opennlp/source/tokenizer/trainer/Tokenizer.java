@@ -39,13 +39,13 @@ public class Tokenizer {
 				StringBuffer sb = new StringBuffer();
 				for (CoreLabel token : sentence.get(TokensAnnotation.class)) {
 					String word = token.get(TextAnnotation.class);
-					if (!StringUtils.isAlphanumeric(word)) {
+					if (!StringUtils.isAlphanumeric(word) && !word.contains("-")) {
 						sb.append("<SPLIT>" + word.replaceAll("``", "“").replaceAll("''", "”"));
 					} else {
 						sb.append(" " + word);
 					}
 				}
-				String result = sb.toString().replaceAll("<SPLIT>“", "“<SPLIT>").trim();
+				String result = sb.toString().replaceAll("<SPLIT>“ ", " “<SPLIT>").trim();
 				System.out.println(result);
 				WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-token.train", result);
 			}
