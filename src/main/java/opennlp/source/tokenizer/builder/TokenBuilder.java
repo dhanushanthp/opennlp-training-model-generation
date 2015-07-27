@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import core.util.Config;
 import core.util.FileUtils;
+import opennlp.tools.tokenize.DefaultTokenContextGenerator;
 import opennlp.tools.tokenize.TokenSample;
 import opennlp.tools.tokenize.TokenSampleStream;
 import opennlp.tools.tokenize.TokenizerME;
@@ -53,5 +54,4 @@ public class TokenBuilder {
 		}
 
 	}
-
 }

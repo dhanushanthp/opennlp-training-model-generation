@@ -28,7 +28,7 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>openlp.source.tokenizer.trainer.TokenizerMain</mainClass>
+							<mainClass>opennlp.source.tokenizer.trainer.TokenizerMain</mainClass>
 						</manifest>
 					</archive>
 					<finalName>en-token-trainer</finalName>

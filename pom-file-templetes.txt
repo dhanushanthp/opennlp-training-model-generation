@@ -89,14 +89,14 @@
 	</descriptorRefs>
 	<archive>
 		<manifest>
-			<mainClass>openlp.source.tokenizer.trainer.TokenizerMain</mainClass>
+			<mainClass>opennlp.source.tokenizer.trainer.TokenizerMain</mainClass>
 		</manifest>
 	</archive>
 	<finalName>en-token-trainer</finalName>
 	<outputDirectory>/opt/model/trainer</outputDirectory>
 </configuration>
 
-<!-- token trainer  -->
+<!-- token builder  -->
 <configuration>
 	<descriptorRefs>
 		<descriptorRef>jar-with-dependencies</descriptorRef>
