@@ -44,7 +44,7 @@ public class ChunTrainDataCreatorOpennlp {
 	}
 
 	public static void main(String[] args) throws InvalidFormatException, IOException {
-		String wholeText = "Since the 1890s";
+		String wholeText = "“James B Stewart” Common Sense column observes Apple, formerly market laggard, has far distanced Microsoft in share price since January 2014.";
 		ChunTrainDataCreatorOpennlp ctdo = new ChunTrainDataCreatorOpennlp();
 		ctdo.generateChunkerTrainData(wholeText);
 	}

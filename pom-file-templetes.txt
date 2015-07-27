@@ -81,3 +81,31 @@
 	<finalName>en-ner-builder</finalName>
 	<outputDirectory>/opt/model/builder</outputDirectory>
 </configuration>
+
+<!-- token trainer  -->
+<configuration>
+	<descriptorRefs>
+		<descriptorRef>jar-with-dependencies</descriptorRef>
+	</descriptorRefs>
+	<archive>
+		<manifest>
+			<mainClass>openlp.source.tokenizer.trainer.TokenizerMain</mainClass>
+		</manifest>
+	</archive>
+	<finalName>en-token-trainer</finalName>
+	<outputDirectory>/opt/model/trainer</outputDirectory>
+</configuration>
+
+<!-- token trainer  -->
+<configuration>
+	<descriptorRefs>
+		<descriptorRef>jar-with-dependencies</descriptorRef>
+	</descriptorRefs>
+	<archive>
+		<manifest>
+			<mainClass>opennlp.source.tokenizer.builder.TokenBuilder</mainClass>
+		</manifest>
+	</archive>
+	<finalName>en-token-builder</finalName>
+	<outputDirectory>/opt/model/builder</outputDirectory>
+</configuration>
