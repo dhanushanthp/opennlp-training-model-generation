@@ -28,7 +28,7 @@ public class Tokenizer {
 		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
 		StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
-		String text = "James B Stewart Common Sense column observes Apple, formerly market laggard, has far distanced Microsoft in share price since January 2014";
+		String text = "James B Stewart Common Sense column observes Apple, I'm having market laggard, has far distanced Microsoft in share price since January 2014";
 
 		Annotation document = new Annotation(text);
 

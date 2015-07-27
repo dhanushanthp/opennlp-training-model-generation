@@ -109,3 +109,31 @@
 	<finalName>en-token-builder</finalName>
 	<outputDirectory>/opt/model/builder</outputDirectory>
 </configuration>
+
+<!-- pos trainer  -->
+<configuration>
+	<descriptorRefs>
+		<descriptorRef>jar-with-dependencies</descriptorRef>
+	</descriptorRefs>
+	<archive>
+		<manifest>
+			<mainClass>opennlp.source.pos.trainer.PosTrainerMain</mainClass>
+		</manifest>
+	</archive>
+	<finalName>en-pos-trainer</finalName>
+	<outputDirectory>/opt/model/trainer</outputDirectory>
+</configuration>
+
+<!-- pos builder  -->
+<configuration>
+	<descriptorRefs>
+		<descriptorRef>jar-with-dependencies</descriptorRef>
+	</descriptorRefs>
+	<archive>
+		<manifest>
+			<mainClass>opennlp.source.pos.trainer.PosTrainerMain</mainClass>
+		</manifest>
+	</archive>
+	<finalName>en-pos-trainer</finalName>
+	<outputDirectory>/opt/model/trainer</outputDirectory>
+</configuration>
