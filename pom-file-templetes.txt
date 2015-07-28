@@ -131,9 +131,9 @@
 	</descriptorRefs>
 	<archive>
 		<manifest>
-			<mainClass>opennlp.source.pos.trainer.PosTrainerMain</mainClass>
+			<mainClass>opennlp.source.pos.builder.PosBuilder</mainClass>
 		</manifest>
 	</archive>
-	<finalName>en-pos-trainer</finalName>
-	<outputDirectory>/opt/model/trainer</outputDirectory>
+	<finalName>en-pos-builder</finalName>
+	<outputDirectory>/opt/model/builder</outputDirectory>
 </configuration>

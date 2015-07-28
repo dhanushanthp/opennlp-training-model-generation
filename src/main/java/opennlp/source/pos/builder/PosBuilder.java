@@ -1,48 +1,57 @@
 package opennlp.source.pos.builder;
 
+import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.OutputStream;
+import java.nio.charset.Charset;
 
-import opennlp.source.chuncker.trainer.TokenObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import core.util.Config;
+import core.util.FileUtils;
 import opennlp.tools.postag.POSModel;
+import opennlp.tools.postag.POSSample;
 import opennlp.tools.postag.POSTaggerME;
-import opennlp.tools.tokenize.WhitespaceTokenizer;
-/**
- * Create part-of-speech tags using opennlp
- * @author root
- *
- */
+import opennlp.tools.postag.WordTagSampleStream;
+import opennlp.tools.util.ObjectStream;
+import opennlp.tools.util.PlainTextByLineStream;
+import opennlp.tools.util.TrainingParameters;
+
 public class PosBuilder {
-	static InputStream modelIn = null;
-	static POSModel model = null;
+	private static final Logger LOG = LoggerFactory.getLogger(PosBuilder.class);
 
-	public static List<TokenObject> getPOSTags(String sentence) {
-		List<TokenObject> response = new ArrayList<TokenObject>();
+	@SuppressWarnings("deprecation")
+	public static void main(String[] args) throws IOException {
+		LOG.info("loading train data from : " + Config.getTrainDataPath() + "en-pos.train");
+		LOG.info("writing trained model to  : " + Config.getModelDataPath() + "en-pos.bin");
+
+		FileUtils.CreateMultiDirec(Config.getModelDataPath());
+
+		Charset charset = Charset.forName("UTF-8");
+		ObjectStream<String> lineStream = new PlainTextByLineStream(new FileInputStream(Config.getTrainDataPath() + "en-pos.train"),
+				charset);
+		ObjectStream<POSSample> objectStream = new WordTagSampleStream(lineStream);
+
+		POSModel model;
+
 		try {
-			modelIn = new FileInputStream("en-pos-maxent.bin");
-			model = new POSModel(modelIn);
-		} catch (IOException e) {
-			e.printStackTrace();
+			model = POSTaggerME.train("en", objectStream,  TrainingParameters.defaultParams(), null, null);
 		} finally {
-			if (modelIn != null) {
-				try {
-					modelIn.close();
-				} catch (IOException e) {
-				}
-			}
-		}
-		
-		POSTaggerME tagger = new POSTaggerME(model);
-		String[] tokens = WhitespaceTokenizer.INSTANCE.tokenize(sentence);
-		String tags[] = tagger.tag(tokens);
-
-		for (int i = 0; i < tags.length; i++) {
-			response.add(new TokenObject(tokens[i], tags[i]));
+			objectStream.close();
 		}
 
-		return response;
+		OutputStream modelOut = null;
+		try {
+			modelOut = new BufferedOutputStream(new FileOutputStream(Config.getModelDataPath() + "en-pos.bin"));
+			model.serialize(modelOut);
+		} finally {
+			if (modelOut != null)
+				modelOut.close();
+		}
+
 	}
+
 }
