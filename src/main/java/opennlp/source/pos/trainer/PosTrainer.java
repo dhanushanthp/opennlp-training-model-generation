@@ -1,9 +1,10 @@
 package opennlp.source.pos.trainer;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
-
 import core.util.Config;
 import core.util.ReadTxtFile;
 import core.util.WriteFile;
@@ -24,6 +25,15 @@ import edu.stanford.nlp.util.CoreMap;
  *
  */
 public class PosTrainer {
+	public static Map<String, String> bracketMap = new HashMap<String,String>();
+	static{
+		bracketMap.put("-lrb-", "(");
+		bracketMap.put("-rrb-", ")");
+		bracketMap.put("-lsb-", "[");
+		bracketMap.put("-rsb-", "]");
+		bracketMap.put("-lcb-", "{");
+		bracketMap.put("-rcb-", "}");
+	}
 
 	public static void generatePosTags(String text) throws IOException {
 		Properties props = new Properties();
@@ -43,7 +53,11 @@ public class PosTrainer {
 				for (CoreLabel token : sentence.get(TokensAnnotation.class)) {
 					String word = token.get(TextAnnotation.class);
 					String pos = token.get(PartOfSpeechAnnotation.class);
-					sb.append(word + "_" + pos + " ");
+					if(bracketMap.containsKey(pos.toLowerCase())){
+						sb.append(bracketMap.get(word.toLowerCase()) + "_" + word + " ");
+					}else{
+						sb.append(word + "_" + pos + " ");
+					}
 				}
 			}
 			/**
