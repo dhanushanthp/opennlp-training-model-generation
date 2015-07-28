@@ -32,7 +32,7 @@ public class Tokenizer {
 
 	public static void main(String[] args) {
 		try {
-			String[] result = getTokens("“James B Stewart” Common Sense column observes Apple 75%, formerly market laggard, has far distanced Microsoft in share price since January. 2014.");
+			String[] result = getTokens("“James B Stewart” Common Sense column observes (Apple 75%), formerly market laggard, has far distanced Microsoft in share price since January. 2014.");
 			System.out.println(Arrays.toString(result));
 		} catch (IOException e) {
 			e.printStackTrace();

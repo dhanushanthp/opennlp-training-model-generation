@@ -29,10 +29,10 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>opennlp.source.chuncker.trainer.TrainingDataCreatorMain</mainClass>
+							<mainClass>opennlp.source.tokenizer.trainer.TokenizerMain</mainClass>
 						</manifest>
 					</archive>
-					<finalName>en-chunker-trainer</finalName>
+					<finalName>en-token-trainer</finalName>
 					<outputDirectory>/opt/model/trainer</outputDirectory>
 				</configuration>
 				<executions>
