@@ -40,12 +40,12 @@ public class Tokenizer {
 				for (CoreLabel token : sentence.get(TokensAnnotation.class)) {
 					String word = token.get(TextAnnotation.class);
 					if (!StringUtils.isAlphanumeric(word) && !word.contains("-")) {
-						sb.append("<SPLIT>" + word.replaceAll("``", "“").replaceAll("''", "”"));
+						sb.append("<SPLIT>" + word.replaceAll("``", Config.getLeftQua()).replaceAll("''", Config.getRightQua()));
 					} else {
 						sb.append(" " + word);
 					}
 				}
-				String result = sb.toString().replaceAll("<SPLIT>“ ", " “<SPLIT>").trim();
+				String result = sb.toString().replaceAll("<SPLIT>"+Config.getLeftQua()+" ", " "+Config.getLeftQua()+"<SPLIT>").trim();
 				System.out.println(result);
 				WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-token.train", result);
 			}

@@ -13,9 +13,11 @@ import org.slf4j.LoggerFactory;
 
 public class LoadStopWords {
 	private static final Logger LOG = LoggerFactory.getLogger(LoadStopWords.class);
+	static {
+		LOG.info("loading stop words.");
+	}
 
 	public static Set<String> getAllStopWords() throws IOException {
-		LOG.info("loading stop words.");
 		Set<String> stopWords = new HashSet<String>();
 		Files.walk(Paths.get(Config.getStopWordsPath())).forEach(filePath -> {
 
@@ -39,6 +41,6 @@ public class LoadStopWords {
 	}
 
 	public static void main(String[] args) throws IOException {
-		System.out.println(getAllStopWords().size());
+		System.out.println(getAllStopWords().contains("common"));
 	}
 }

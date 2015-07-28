@@ -28,11 +28,11 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>opennlp.source.pos.builder.PosBuilder</mainClass>
+							<mainClass>opennlp.source.tokenizer.trainer.TokenizerMain</mainClass>
 						</manifest>
 					</archive>
-					<finalName>en-pos-builder</finalName>
-					<outputDirectory>/opt/model/builder</outputDirectory>
+					<finalName>en-token-trainer</finalName>
+					<outputDirectory>/opt/model/trainer</outputDirectory>
 				</configuration>
 				<executions>
 					<execution>

@@ -23,7 +23,7 @@ public class TrainingDataCreatorMain {
 				String page = ReadTxtFile.getXmlExtString(filePath.toString());
 				
 				try {
-					ChunTrainDataCreatorOpennlp trinDataCret = new ChunTrainDataCreatorOpennlp();
+					OpennlpChunTrainDataCreator trinDataCret = new OpennlpChunTrainDataCreator();
 					trinDataCret.generateChunkerTrainData(page);
 				} catch (Exception e) {
 					e.printStackTrace();

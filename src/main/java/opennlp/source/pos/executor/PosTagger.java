@@ -2,7 +2,9 @@ package opennlp.source.pos.executor;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+
 import core.util.Config;
+import core.util.ReadTxtFile;
 import opennlp.source.tokenizer.executor.Tokenizer;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSSample;
@@ -22,7 +24,7 @@ public class PosTagger {
 	}
 
 	public static void main(String[] args) throws IOException {
-		POSObj resu = POSTag("“James B Stewart“ Common Sense column observes Apple, formerly market laggard, has far distanced Microsoft in share price since January 2014.");
+		POSObj resu = POSTag(ReadTxtFile.getString("build-training-models/paragraph.txt"));
 //		System.out.println(Arrays.toString(resu.getTags()));
 //		System.out.println(Arrays.toString(resu.getTokens()));
 	}

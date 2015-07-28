@@ -52,4 +52,12 @@ public class Config {
 	public static String getStopWordsPath() {
 		return prop.getProperty("stop-words-dir-path");
 	}
+	
+	public static String getLeftQua() {
+		return prop.getProperty("left-qua");
+	}
+	
+	public static String getRightQua() {
+		return prop.getProperty("right-qua");
+	}
 }

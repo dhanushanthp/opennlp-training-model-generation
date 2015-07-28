@@ -46,7 +46,7 @@ public class PosTrainer {
 					sb.append(word + "_" + pos + " ");
 				}
 			}
-			String result = sb.toString().replaceAll("``", "“").replaceAll("''", "”").trim();
+			String result = sb.toString().replaceAll("``", Config.getLeftQua()).replaceAll("''", Config.getRightQua()).trim();
 			System.out.println(result);
 			WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-pos.train", result);
 		}
