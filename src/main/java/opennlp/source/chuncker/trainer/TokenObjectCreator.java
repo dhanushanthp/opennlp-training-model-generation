@@ -52,9 +52,12 @@ public class TokenObjectCreator {
 	 * @param List
 	 *            <CoreLabel> the input
 	 * @return List<CoreLabel> the input
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public static List<TokenObject> generatePhrases(ArrayList<TokenObject> input) throws IOException {
+		/**
+		 * adding B-NP and I-NP for the tokens.
+		 */
 		for (int i = 0; i < input.size(); i++) {
 			if (baseCheck(input, i)) {
 				input.get(i).setChunkerToken("B-NP");
@@ -70,38 +73,53 @@ public class TokenObjectCreator {
 		}
 
 		for (int i = 0; i < input.size(); i++) {
-			
+
+
+			/**
+			 * If the length of the token is less than 2. At the same time next token should not be noun.
+			 */
 			if(input.get(i).getToken().length() < 2){
-				input.get(i).setChunkerToken("O");
+				if (i == input.size() - 1) {
+					input.get(i).setChunkerToken("O");
+				} else if (input.get(i + 1).getChunkerToken().equals("O")) {
+					input.get(i).setChunkerToken("O");
+				}
 			}
 			
-			if(input.get(i).getToken().charAt(0) == '-'){
-				input.get(i).setChunkerToken("O");
+			// if the first char contain -
+			if (input.get(i).getToken().charAt(0) == '-') {
+				if (i == input.size() - 1) {
+					input.get(i).setChunkerToken("O");
+				} else if (input.get(i + 1).getChunkerToken().equals("I-NP")) {
+					input.get(i).setChunkerToken("O");
+					input.get(i + 1).setChunkerToken("B-NP");
+				}
 			}
-			
+
 			/**
 			 * If there is only adjective comes.
 			 */
-			if(input.get(i).getPOS().equals("JJ") && input.get(i).getChunkerToken().equals("B-NP")){
+			if (input.get(i).getPOS().equals("JJ") && input.get(i).getChunkerToken().equals("B-NP")) {
 				if (i == input.size() - 1) {
 					input.get(i).setChunkerToken("O");
-				}else if(input.get(i+1).getChunkerToken().equals("O")){
-					input.get(i).setChunkerToken("O");					
+				} else if (input.get(i + 1).getChunkerToken().equals("O")) {
+					input.get(i).setChunkerToken("O");
 				}
 			}
-			
+
 			/**
 			 * Stop words removal
 			 */
-			if(LoadStopWords.getAllStopWords().contains(input.get(i).getToken().trim().toLowerCase()) &&  input.get(i).getChunkerToken().equals("B-NP") ){
+			if (LoadStopWords.getAllStopWords().contains(input.get(i).getToken().trim().toLowerCase())
+					&& input.get(i).getChunkerToken().equals("B-NP")) {
 				if (i == input.size() - 1) {
 					input.get(i).setChunkerToken("O");
-				}else if(input.get(i+1).getChunkerToken().equals("I-NP")){
+				} else if (input.get(i + 1).getChunkerToken().equals("I-NP")) {
 					input.get(i).setChunkerToken("O");
-					input.get(i+1).setChunkerToken("B-NP");					
+					input.get(i + 1).setChunkerToken("B-NP");
 				}
 			}
-			
+
 			if (!StringUtils.isAlpha(input.get(i).getToken()) && input.get(i).getChunkerToken().equals("B-NP")) {
 				if (!input.get(i).getToken().contains("-")) {
 					input.get(i).setChunkerToken("O");

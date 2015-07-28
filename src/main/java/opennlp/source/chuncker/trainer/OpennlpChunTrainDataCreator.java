@@ -31,23 +31,23 @@ public class OpennlpChunTrainDataCreator {
 
 				List<TokenObject> listOfTO = PosEvaluation.getPOSTags(sentence);
 				System.out.println(listOfTO + "\n");
-				
-//				List<TokenObject> response = TokenObjectCreator.generatePhrases((ArrayList<TokenObject>) listOfTO);
-//
-//				for (TokenObject tokenObject : response) {
-//					String result = tokenObject.getToken() + " " + tokenObject.getPOS() + " " + tokenObject.getChunkerToken();
-//					// LOG.debug(result);
-//					System.out.println(result);
-//					WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-chunker.train", result);
-//				}
-//				WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-chunker.train", "");
+
+				List<TokenObject> response = TokenObjectCreator.generatePhrases((ArrayList<TokenObject>) listOfTO);
+
+				for (TokenObject tokenObject : response) {
+					String result = tokenObject.getToken() + " " + tokenObject.getPOS() + " " + tokenObject.getChunkerToken();
+					// LOG.debug(result);
+					System.out.println(result);
+					WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-chunker.train", result);
+				}
+				WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-chunker.train", "");
 			}
 		}
 	}
 
 	public static void main(String[] args) throws InvalidFormatException, IOException {
-//		String wholeText = "“James B Stewart” Common Sense column observes Apple, formerly market laggard, has far distanced Microsoft in share price since January 2014.";
-		String wholeText = ReadTxtFile.getXmlExtString("/opt/data-extractor/data/wikidata/pages/AA/wiki_03");
+		String wholeText = "\"James B Stewart\" Common Sense column observes Apple, formerly market laggard, has far distanced Microsoft in share price since January 2014.";
+		// String wholeText = ReadTxtFile.getXmlExtString("/opt/data-extractor/data/wikidata/pages/AA/wiki_03");
 		OpennlpChunTrainDataCreator ctdo = new OpennlpChunTrainDataCreator();
 		ctdo.generateChunkerTrainData(wholeText);
 	}

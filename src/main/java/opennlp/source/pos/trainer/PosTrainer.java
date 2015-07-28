@@ -46,6 +46,9 @@ public class PosTrainer {
 					sb.append(word + "_" + pos + " ");
 				}
 			}
+			/**
+			 * This need to trained with " and right and left quotation.
+			 */
 			String result = sb.toString().replaceAll("``", Config.getLeftQua()).replaceAll("''", Config.getRightQua()).trim();
 			System.out.println(result);
 			WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-pos.train", result);

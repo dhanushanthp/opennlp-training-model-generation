@@ -28,7 +28,7 @@ public class LoadStopWords {
 					br = new BufferedReader(new FileReader(filePath.toString()));
 					String line;
 					while ((line = br.readLine()) != null) {
-						stopWords.add(line.trim());
+						stopWords.add(line.trim().toLowerCase());
 					}
 					br.close();
 				} catch (IOException e) {
@@ -41,6 +41,6 @@ public class LoadStopWords {
 	}
 
 	public static void main(String[] args) throws IOException {
-		System.out.println(getAllStopWords().contains("common"));
+		System.out.println(getAllStopWords().size());
 	}
 }
