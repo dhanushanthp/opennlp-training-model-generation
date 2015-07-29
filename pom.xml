@@ -22,18 +22,18 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>2.4.1</version>
-				<!-- token trainer -->
+				<!-- chunker trainer -->
 				<configuration>
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>opennlp.source.tokenizer.trainer.TokenizerMain</mainClass>
+							<mainClass>opennlp.source.chuncker.trainer.TrainingDataCreatorMain</mainClass>
 						</manifest>
 					</archive>
-					<finalName>en-token-trainer</finalName>
-					<outputDirectory>/opt/model/trainer</outputDirectory>
+					<finalName>en-chunker-trainer</finalName>
+					<outputDirectory>/opt/model/trainer/chunker</outputDirectory>
 				</configuration>
 				<executions>
 					<execution>
