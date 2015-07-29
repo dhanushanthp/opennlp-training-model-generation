@@ -80,9 +80,11 @@ public class Tokenizer {
 							if(word.contains("``") || word.contains("''") && enabler ){
 								sb.append(" " + word.replaceAll("``", Config.getLeftQua()).replaceAll("''", Config.getRightQua()) + "<SPLIT>" );
 								enabler = false;
-							}else{
+							}else if(word.contains("''")){
 								sb.append("<SPLIT>" + word.replaceAll("``", Config.getLeftQua()).replaceAll("''", Config.getRightQua()));
 								enabler = true;
+							}else{
+								sb.append("<SPLIT>" + word.replaceAll("``", Config.getLeftQua()).replaceAll("''", Config.getRightQua()));
 							}
 						}
 					} else {
