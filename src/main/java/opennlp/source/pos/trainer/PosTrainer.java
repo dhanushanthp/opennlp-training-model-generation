@@ -25,8 +25,8 @@ import edu.stanford.nlp.util.CoreMap;
  *
  */
 public class PosTrainer {
-	public static Map<String, String> bracketMap = new HashMap<String,String>();
-	static{
+	public static Map<String, String> bracketMap = new HashMap<String, String>();
+	static {
 		bracketMap.put("-lrb-", "(");
 		bracketMap.put("-rrb-", ")");
 		bracketMap.put("-lsb-", "[");
@@ -53,9 +53,9 @@ public class PosTrainer {
 				for (CoreLabel token : sentence.get(TokensAnnotation.class)) {
 					String word = token.get(TextAnnotation.class);
 					String pos = token.get(PartOfSpeechAnnotation.class);
-					if(bracketMap.containsKey(pos.toLowerCase())){
+					if (bracketMap.containsKey(pos.toLowerCase())) {
 						sb.append(bracketMap.get(word.toLowerCase()) + "_" + word + " ");
-					}else{
+					} else {
 						sb.append(word + "_" + pos + " ");
 					}
 				}
@@ -71,7 +71,8 @@ public class PosTrainer {
 	}
 
 	public static void main(String[] args) throws IOException {
-//		String text = "“James B Stewart“ Common Sense column observes Apple 75%, formerly market laggard, has far distanced Microsoft in share price since January 2014.";
+		// String text =
+		// "“James B Stewart“ Common Sense column observes Apple 75%, formerly market laggard, has far distanced Microsoft in share price since January 2014.";
 		String text = ReadTxtFile.getString("build-training-models/paragraph.txt");
 		generatePosTags(text);
 	}

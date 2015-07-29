@@ -24,25 +24,26 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
 
 public class Tokenizer {
-	public static Map<String, String> bracketMap = new HashMap<String,String>();
+	public static Map<String, String> bracketMap = new HashMap<String, String>();
 	public static Set<String> left = new HashSet<String>();
 	public static Set<String> right = new HashSet<String>();
-	static{
+	static {
 		bracketMap.put("-lrb-", "(");
 		bracketMap.put("-rrb-", ")");
 		bracketMap.put("-lsb-", "[");
 		bracketMap.put("-rsb-", "]");
 		bracketMap.put("-lcb-", "{");
 		bracketMap.put("-rcb-", "}");
-		
+
 		left.add("(");
 		left.add("[");
 		left.add("{");
-		
+
 		right.add(")");
 		right.add("]");
 		right.add("}");
 	}
+
 	public static void generateTokens(String text) throws IOException {
 		Properties props = new Properties();
 		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
@@ -62,28 +63,31 @@ public class Tokenizer {
 				boolean enabler = true;
 				for (CoreLabel token : sentence.get(TokensAnnotation.class)) {
 					String word = token.get(TextAnnotation.class);
-					if(bracketMap.containsKey(word.toLowerCase())){
+					if (bracketMap.containsKey(word.toLowerCase())) {
 						word = bracketMap.get(word.toLowerCase());
 					}
 					if (!StringUtils.isAlphanumeric(word) && !word.contains("-")) {
-						if(left.contains(word)){
+						if (left.contains(word)) {
 							sb.append(" " + word + "<SPLIT>");
-						}else if(right.contains(word)){
-							sb.append("<SPLIT>" + word );
-						}else{
+						} else if (right.contains(word)) {
+							sb.append("<SPLIT>" + word);
+						} else {
 							/**
-							 * This has been introduced to fix the splitter location with the double quotation.
-							 * So based on the enabler that will process.
+							 * This has been introduced to fix the splitter
+							 * location with the double quotation. So based on
+							 * the enabler that will process.
 							 * 
-							 * NOTE: The configuration file need to be changes with 2 type of quotations to train the data.
+							 * NOTE: The configuration file need to be changes
+							 * with 2 type of quotations to train the data.
 							 */
-							if(word.contains("``") || word.contains("''") && enabler ){
-								sb.append(" " + word.replaceAll("``", Config.getLeftQua()).replaceAll("''", Config.getRightQua()) + "<SPLIT>" );
+							if (word.contains("``") || word.contains("''") && enabler) {
+								sb.append(" " + word.replaceAll("``", Config.getLeftQua()).replaceAll("''", Config.getRightQua())
+										+ "<SPLIT>");
 								enabler = false;
-							}else if(word.contains("''")){
+							} else if (word.contains("''")) {
 								sb.append("<SPLIT>" + word.replaceAll("``", Config.getLeftQua()).replaceAll("''", Config.getRightQua()));
 								enabler = true;
-							}else{
+							} else {
 								sb.append("<SPLIT>" + word.replaceAll("``", Config.getLeftQua()).replaceAll("''", Config.getRightQua()));
 							}
 						}
@@ -92,7 +96,8 @@ public class Tokenizer {
 					}
 				}
 				String result = sb.toString().trim();
-//				result = result.replaceAll("<SPLIT>"+Config.getLeftQua()+" ", " "+Config.getLeftQua()+"<SPLIT>");
+				// result = result.replaceAll("<SPLIT>"+Config.getLeftQua()+" ",
+				// " "+Config.getLeftQua()+"<SPLIT>");
 				result = result.replaceAll("<SPLIT> ", "<SPLIT>");
 				System.out.println(result);
 				WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-token.train", result);
