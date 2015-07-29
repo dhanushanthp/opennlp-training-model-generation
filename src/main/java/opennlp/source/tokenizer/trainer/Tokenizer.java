@@ -98,8 +98,6 @@ public class Tokenizer {
 					}
 				}
 				String result = sb.toString().trim();
-				// result = result.replaceAll("<SPLIT>"+Config.getLeftQua()+" ",
-				// " "+Config.getLeftQua()+"<SPLIT>");
 				result = result.replaceAll("<SPLIT> ", "<SPLIT>");
 				result = result.replaceAll("/", "<SPLIT>/<SPLIT>");
 				result = result.replaceAll(", \\[<SPLIT>", ",<SPLIT>\\[<SPLIT>");

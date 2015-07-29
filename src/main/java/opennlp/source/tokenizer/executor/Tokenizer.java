@@ -3,8 +3,6 @@ package opennlp.source.tokenizer.executor;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
-
 import core.util.Config;
 import core.util.ReadTxtFile;
 import opennlp.tools.tokenize.TokenizerME;

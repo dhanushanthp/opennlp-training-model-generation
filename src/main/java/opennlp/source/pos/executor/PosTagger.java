@@ -2,12 +2,10 @@ package opennlp.source.pos.executor;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-
 import core.util.Config;
 import core.util.ReadTxtFile;
 import opennlp.source.tokenizer.executor.Tokenizer;
 import opennlp.tools.postag.POSModel;
-import opennlp.tools.postag.POSSample;
 import opennlp.tools.postag.POSTaggerME;
 
 public class PosTagger {
@@ -17,15 +15,15 @@ public class PosTagger {
 
 		String tokenWords[] = Tokenizer.getTokens(input);
 		String[] tags = tagger.tag(tokenWords);
-		POSSample result = new POSSample(tokenWords, tags);
 		POSObj po = new POSObj(tokenWords, tags);
-		System.out.println(result);
 		return po;
 	}
 
 	public static void main(String[] args) throws IOException {
 		POSObj resu = POSTag(ReadTxtFile.getString("build-training-models/paragraph.txt"));
-//		System.out.println(Arrays.toString(resu.getTags()));
-//		System.out.println(Arrays.toString(resu.getTokens()));
+
+		for (int i = 0; i < resu.getTags().length; i++) {
+			System.out.println(resu.getTokens()[i] + " _ " + resu.getTags()[i]);
+		}
 	}
 }

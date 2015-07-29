@@ -1,1 +1,15 @@
-<div class="kmldata" title="Template:Attached_KML/New Hampshire Route 111" style="display:none;">
+A computer is a machine that is able to take information (input), do some work on or make changes to the information, to make new information (output). Computers have existed for much of human history. Examples of early computers are the astrolabe and the abacus.
+
+Modern computers are very different from early computers. They are now very powerful machines that are able to do billions of calculations every second. Most people have used a personal computer in their home or at work. Computers are useful for many different jobs where automatic tasks are useful. Some examples are controlling traffic lights, vehicle computers, security systems, washing machines and digital televisions.
+
+A person (called a user) can control a computer by telling it to do things. Some ways of controlling a computer are with a keyboard, mouse, buttons, touch screen. Some very new computers can also be controlled with voice commands or hand gestures.
+
+Computers can be designed to do anything with information. Computers are used to control factories, which in the past were controlled by humans. They are also in homes, where they are used for things such as listening to music, reading the news, and writing.
+
+Modern computers are electronic machines. A computer is only useful if it has both hardware and software. Hardware is the physical parts the computer is made of - for example keyboard, mouse, screen, tower, and the circuits inside it. Software is the computer programs (mathematical instructions). The software uses the hardware, when the user gives it instructions and changing it in to useful output.
+
+Many modern computers do billions of calculations each second. They do mathematical arithmetic very quickly but computers do not really "think". They only follow the instructions in their software programs.
+
+Computer programs are designed or written by computer programmers. A few programmers write programs in the computer's own language called machine code. Machine code has only a few instructions and is based on logic and arithmetic. Using machine code is difficult for most human programmers.
+
+Today, programs are commonly written using a programming language like C++, Java, and Python. These programming languages are more like the language you talk and write with every day. A program called a compiler translates the user's instructions into binary code (machine code) and turns it into useful information that a user can easily understand, and then the computer will understand the instructions and do what is needed.
