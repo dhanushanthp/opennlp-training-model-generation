@@ -1,4 +1,4 @@
-package opennlp.source.pos.executor;
+package opennlp.source.pos.evaluation;
 
 import java.io.FileInputStream;
 import java.io.IOException;

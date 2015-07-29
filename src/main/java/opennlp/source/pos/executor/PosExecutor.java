@@ -1,4 +1,4 @@
-package opennlp.source.pos.evaluation;
+package opennlp.source.pos.executor;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,7 +17,7 @@ import opennlp.tools.util.InvalidFormatException;
  * @author root
  *
  */
-public class PosEvaluation {
+public class PosExecutor {
 	static InputStream modelIn = null;
 	static POSModel model = null;
 

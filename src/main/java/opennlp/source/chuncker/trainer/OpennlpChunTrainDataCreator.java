@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import core.util.Config;
 import core.util.ReadTxtFile;
 import core.util.WriteFile;
-import opennlp.source.pos.evaluation.PosEvaluation;
+import opennlp.source.pos.executor.PosExecutor;
 import opennlp.source.sentencer.executor.SentenceDetector;
 import opennlp.tools.util.InvalidFormatException;
 
@@ -29,8 +29,7 @@ public class OpennlpChunTrainDataCreator {
 			if (!sentence.trim().equals("")) {
 				LOG.debug("open-nlp sentence : " + sentence);
 
-				List<TokenObject> listOfTO = PosEvaluation.getPOSTags(sentence);
-				System.out.println(listOfTO + "\n");
+				List<TokenObject> listOfTO = PosExecutor.getPOSTags(sentence);
 
 				List<TokenObject> response = TokenObjectCreator.generatePhrases((ArrayList<TokenObject>) listOfTO);
 
@@ -40,14 +39,16 @@ public class OpennlpChunTrainDataCreator {
 					System.out.println(result);
 					WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-chunker.train", result);
 				}
+				System.out.println();
 				WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-chunker.train", "");
 			}
 		}
 	}
 
 	public static void main(String[] args) throws InvalidFormatException, IOException {
-		String wholeText = "\"James B Stewart\" Common Sense column observes Apple, formerly market laggard, has far distanced Microsoft in share price since January 2014.";
-		// String wholeText = ReadTxtFile.getXmlExtString("/opt/data-extractor/data/wikidata/pages/AA/wiki_03");
+//		String wholeText = "\"James B Stewart\" Common Sense column observes Apple,[formerly/market laggard], has far distanced Microsoft in share price since January 2014.";
+//		String wholeText = ReadTxtFile.getXmlExtString("/opt/data-extractor/data/wikidata/pages/AA/wiki_03");
+		String wholeText = ReadTxtFile.getString("build-training-models/paragraph.txt");
 		OpennlpChunTrainDataCreator ctdo = new OpennlpChunTrainDataCreator();
 		ctdo.generateChunkerTrainData(wholeText);
 	}
