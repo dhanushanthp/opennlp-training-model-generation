@@ -35,7 +35,6 @@ public class OpennlpChunTrainDataCreator {
 
 				for (TokenObject tokenObject : response) {
 					String result = tokenObject.getToken() + " " + tokenObject.getPOS() + " " + tokenObject.getChunkerToken();
-					// LOG.debug(result);
 					System.out.println(result);
 					WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-chunker.train", result);
 				}
