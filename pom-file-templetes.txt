@@ -9,7 +9,7 @@
 		</manifest>
 	</archive>
 	<finalName>en-chunker-builder</finalName>
-	<outputDirectory>/opt/model/builder</outputDirectory>
+	<outputDirectory>/opt/model/builder/chunker</outputDirectory>
 </configuration>
 
 <!-- chunker trainer  -->
@@ -23,7 +23,7 @@
 		</manifest>
 	</archive>
 	<finalName>en-chunker-trainer</finalName>
-	<outputDirectory>/opt/model/trainer</outputDirectory>
+	<outputDirectory>/opt/model/trainer/chunker</outputDirectory>
 </configuration>
 
 <!-- chunker trainer  threaded-->
@@ -37,7 +37,7 @@
 		</manifest>
 	</archive>
 	<finalName>en-chunker-thread-trainer</finalName>
-	<outputDirectory>/opt/model/trainer</outputDirectory>
+	<outputDirectory>/opt/model/trainer/chunker</outputDirectory>
 </configuration>
 
 <!-- ner trainer  -->
@@ -51,7 +51,7 @@
 		</manifest>
 	</archive>
 	<finalName>en-ner-trainer</finalName>
-	<outputDirectory>/opt/model/trainer</outputDirectory>
+	<outputDirectory>/opt/model/trainer/ner</outputDirectory>
 </configuration>
 
 <!-- ner trainer  threaded-->
@@ -64,7 +64,7 @@
 			<mainClass>opennlp.source.namefinder.trainer.NerThreadedTraining</mainClass>
 		</manifest>
 	</archive>
-	<finalName>en-ner-thread-trainer</finalName>
+	<finalName>en-ner-thread-trainer/ner</finalName>
 	<outputDirectory>/opt/model/trainer</outputDirectory>
 </configuration>
 
@@ -79,7 +79,7 @@
 		</manifest>
 	</archive>
 	<finalName>en-ner-builder</finalName>
-	<outputDirectory>/opt/model/builder</outputDirectory>
+	<outputDirectory>/opt/model/builder/ner</outputDirectory>
 </configuration>
 
 <!-- token trainer  -->
@@ -93,7 +93,7 @@
 		</manifest>
 	</archive>
 	<finalName>en-token-trainer</finalName>
-	<outputDirectory>/opt/model/trainer</outputDirectory>
+	<outputDirectory>/opt/model/trainer/token</outputDirectory>
 </configuration>
 
 <!-- token builder  -->
@@ -107,7 +107,7 @@
 		</manifest>
 	</archive>
 	<finalName>en-token-builder</finalName>
-	<outputDirectory>/opt/model/builder</outputDirectory>
+	<outputDirectory>/opt/model/builder/token</outputDirectory>
 </configuration>
 
 <!-- pos trainer  -->
@@ -121,7 +121,7 @@
 		</manifest>
 	</archive>
 	<finalName>en-pos-trainer</finalName>
-	<outputDirectory>/opt/model/trainer</outputDirectory>
+	<outputDirectory>/opt/model/trainer/pos</outputDirectory>
 </configuration>
 
 <!-- pos builder  -->
@@ -135,5 +135,5 @@
 		</manifest>
 	</archive>
 	<finalName>en-pos-builder</finalName>
-	<outputDirectory>/opt/model/builder</outputDirectory>
+	<outputDirectory>/opt/model/builder/pos</outputDirectory>
 </configuration>
