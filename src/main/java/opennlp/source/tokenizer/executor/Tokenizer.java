@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 
 import core.util.Config;
+import core.util.ReadTxtFile;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
 import opennlp.tools.util.InvalidFormatException;
@@ -32,8 +33,10 @@ public class Tokenizer {
 
 	public static void main(String[] args) {
 		try {
-			String[] result = getTokens("“James B Stewart” Common Sense column observes (Apple 75%), formerly market laggard, has far distanced Microsoft in share price since January. 2014.");
-			System.out.println(Arrays.toString(result));
+			String[] result = getTokens(ReadTxtFile.getString("build-training-models/paragraph.txt"));
+			for (String string : result) {
+				System.out.println(string);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
