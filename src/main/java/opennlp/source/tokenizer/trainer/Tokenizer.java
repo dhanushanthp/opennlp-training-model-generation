@@ -101,7 +101,11 @@ public class Tokenizer {
 				// result = result.replaceAll("<SPLIT>"+Config.getLeftQua()+" ",
 				// " "+Config.getLeftQua()+"<SPLIT>");
 				result = result.replaceAll("<SPLIT> ", "<SPLIT>");
-				result = result.replaceAll("<SPLIT>/ ", "<SPLIT>/<SPLIT>");
+				result = result.replaceAll("/", "<SPLIT>/<SPLIT>");
+				result = result.replaceAll(", \\[<SPLIT>", ",<SPLIT>\\[<SPLIT>");
+				result = result.replaceAll(", \\(<SPLIT>", ",<SPLIT>\\(<SPLIT>");
+				result = result.replaceAll(", \\{<SPLIT>", ",<SPLIT>\\{<SPLIT>");
+				result = result.replaceAll(", <<SPLIT>", ",<SPLIT><<SPLIT>");
 				result = result.replaceAll("= "+Config.getLeftQua()+"<SPLIT>", "=<SPLIT>"+Config.getLeftQua()+"<SPLIT>");
 				System.out.println(result);
 				WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-token.train", result);
