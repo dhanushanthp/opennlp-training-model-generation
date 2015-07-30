@@ -6,6 +6,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import core.util.Config;
 import opennlp.source.chuncker.trainer.TokenObject;
 import opennlp.source.tokenizer.executor.Tokenizer;
@@ -22,11 +25,12 @@ import opennlp.tools.util.InvalidFormatException;
 public class PosExecutor {
 	static InputStream modelIn = null;
 	static POSModel model = null;
-
-	public static ResponseObject getPOSTags(String sentence) throws InvalidFormatException, IOException {
+	private static final Logger LOG = LoggerFactory.getLogger(PosExecutor.class);
+	static {
 		try {
 			modelIn = new FileInputStream(Config.getModelDataPath() + "en-pos.bin");
 			model = new POSModel(modelIn);
+			LOG.info("POS model has been loaded from " + Config.getModelDataPath() + "en-pos.bin");
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -37,11 +41,14 @@ public class PosExecutor {
 				}
 			}
 		}
+	}
+
+	public static ResponseObject getPOSTags(String sentence) throws InvalidFormatException, IOException {
 
 		POSTaggerME tagger = new POSTaggerME(model);
 		String[] tokens = Tokenizer.getTokens(sentence);
 		String tags[] = tagger.tag(tokens);
-		
+
 		ResponseObject response = new ResponseObject(tokens, tags);
 
 		return response;

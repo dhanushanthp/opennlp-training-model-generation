@@ -122,7 +122,7 @@ public class TokenObjectCreator {
 				tokenTagChanger(input, i);
 			}
 
-			if (!StringUtils.isAlpha(input.get(i).getToken()) && input.get(i).getChunkerToken().equals("B-NP")) {
+			if (!StringUtils.isAlpha(input.get(i).getToken()) && input.get(i).getChunkerToken().equals("B-NP") && !input.get(i).getToken().contains(".")) {
 				if (!input.get(i).getToken().contains("-")) {
 					input.get(i).setChunkerToken("O");
 					if (i < input.size() - 1) {
