@@ -97,8 +97,10 @@ public class TokenObjectCreator {
 			/**
 			 * If a adjective comes after the noun then the both should not be combined.
 			 */
-			if (input.get(i).getPOS().equals("JJ") && input.get(i-1).getChunkerToken().equals("B-NP") && onlyNoun.containsKey(input.get(i-1).getPOS())) {
-				input.get(i).setChunkerToken("B-NP");
+			if (input.get(i).getPOS().equals("JJ")) {
+				if(i > 1 && input.get(i-1).getChunkerToken().equals("B-NP") && onlyNoun.containsKey(input.get(i-1).getPOS())){
+					input.get(i).setChunkerToken("B-NP");					
+				}
 			}
 			
 			/**

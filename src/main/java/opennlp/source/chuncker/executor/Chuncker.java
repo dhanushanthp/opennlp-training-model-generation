@@ -4,7 +4,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,13 +11,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import core.util.Config;
-import opennlp.source.phraser.ConceptExtractor;
+import core.util.ReadTxtFile;
+import opennlp.source.pos.executor.PosExecutor;
+import opennlp.source.pos.executor.ResponseObject;
 import opennlp.tools.chunker.ChunkerME;
 import opennlp.tools.chunker.ChunkerModel;
-import opennlp.tools.postag.POSModel;
-import opennlp.tools.postag.POSSample;
-import opennlp.tools.postag.POSTaggerME;
-import opennlp.tools.tokenize.WhitespaceTokenizer;
 import opennlp.tools.util.Span;
 
 /**
@@ -28,22 +25,18 @@ import opennlp.tools.util.Span;
  */
 public class Chuncker {
 	private static final Logger LOG = LoggerFactory.getLogger(Chuncker.class);
-	private static InputStream modelInParse = null;
 	private static InputStream modelInChunker = null;
-	private static POSModel posModel;
 	private static ChunkerModel chunkerModel;
 
 	static {
 
 		try {
-			modelInParse = ConceptExtractor.class.getResourceAsStream("/opennlp/en-pos-maxent.bin");
 			modelInChunker = new FileInputStream(Config.getModelDataPath() + "en-chunker.bin");
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
 
 		try {
-			posModel = new POSModel(modelInParse);
 			chunkerModel = new ChunkerModel(modelInChunker);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -51,34 +44,22 @@ public class Chuncker {
 	}
 
 	public static Map<String, String> getPhrases() throws IOException {
-//		String input = "Neil Alden Armstrong (August 5, 1930 – August 25, 2012) was an American astronaut and the first person to walk on the Moon. He was also an aerospace engineer, naval aviator, test pilot, and university professor. Before becoming an astronaut, Armstrong was an officer in the U.S. Navy and served in the Korean War. ";
-		String input = "I like to learn language processing and the artificial intellegence";
+		String input = "Neil Alden Armstrong (August 5, 1930 – August 25, 2012) was an American astronaut and the first person to walk on the Moon. He was also an aerospace engineer, naval aviator, test pilot, and university professor. Before becoming an astronaut, Armstrong was an officer in the U.S. Navy and served in the Korean War. ";
+//		String input = ReadTxtFile.getString("build-training-models/paragraph.txt");
 
-		POSTaggerME tagger = new POSTaggerME(posModel);
 		ChunkerME chunkerME = new ChunkerME(chunkerModel);
 
-		String wordTokens[] = WhitespaceTokenizer.INSTANCE.tokenize(input);
-		String[] wordTags = tagger.tag(wordTokens);
+		ResponseObject response = PosExecutor.getPOSTags(input);
+
+		Span[] span = chunkerME.chunkAsSpans(response.getTokens(), response.getTags());
 		Map<String, String> listOfWords = new HashMap<String, String>();
-
-		// This is a sample with tags - Just for testing
-		POSSample wordWithTags = new POSSample(wordTokens, wordTags);
-		System.out.println("Word with Tags : \n" + wordWithTags.toString());
-
-		// This is a sample with tags - Just for testing
-		String markdedTags[] = chunkerME.chunk(wordTokens, wordTags);
-		System.out.println("\nIdentifed Phrases as list : \n" + Arrays.toString(markdedTags));
-
-		Span[] span = chunkerME.chunkAsSpans(wordTokens, wordTags);
-
 		for (Span s : span) {
 			StringBuilder string = new StringBuilder();
 			for (int i = s.getStart(); i < s.getEnd(); i++) {
-				string.append((wordTokens[i]) + " ");
+				string.append((response.getTokens()[i]) + " ");
 			}
 
 			if (s.getType().equals("NP")) {
-				// System.out.println(string.toString());
 				listOfWords.put(string.toString(), null);
 			}
 		}

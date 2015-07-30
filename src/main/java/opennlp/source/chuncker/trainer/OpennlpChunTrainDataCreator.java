@@ -11,6 +11,7 @@ import core.util.Config;
 import core.util.ReadTxtFile;
 import core.util.WriteFile;
 import opennlp.source.pos.executor.PosExecutor;
+import opennlp.source.pos.executor.ResponseObject;
 import opennlp.source.sentencer.executor.SentenceDetector;
 import opennlp.tools.util.InvalidFormatException;
 
@@ -29,7 +30,13 @@ public class OpennlpChunTrainDataCreator {
 			if (!sentence.trim().equals("")) {
 				LOG.debug("open-nlp sentence : " + sentence);
 
-				List<TokenObject> listOfTO = PosExecutor.getPOSTags(sentence);
+				ResponseObject res = PosExecutor.getPOSTags(sentence);
+				List<TokenObject> obj = new ArrayList<TokenObject>();
+				for (int i = 0; i < res.getTags().length; i++) {
+					obj.add(new TokenObject(res.getTokens()[i], res.getTags()[i]));
+				}
+
+				List<TokenObject> listOfTO = obj;
 
 				List<TokenObject> response = TokenObjectCreator.generatePhrases((ArrayList<TokenObject>) listOfTO);
 
@@ -45,9 +52,12 @@ public class OpennlpChunTrainDataCreator {
 	}
 
 	public static void main(String[] args) throws InvalidFormatException, IOException {
-//		String wholeText = "\"James B Stewart\" Common Sense column observes Apple,[formerly/market laggard], has far distanced Microsoft in share price since January 2014.";
-//		String wholeText = ReadTxtFile.getXmlExtString("/opt/data-extractor/data/wikidata/pages/AA/wiki_03");
-		String wholeText = ReadTxtFile.getString("build-training-models/paragraph.txt");
+		// String wholeText =
+		// "\"James B Stewart\" Common Sense column observes Apple,[formerly/market laggard], has far distanced Microsoft in share price since January 2014.";
+		// String wholeText =
+		// ReadTxtFile.getXmlExtString("/opt/data-extractor/data/wikidata/pages/AA/wiki_03");
+//		String wholeText = ReadTxtFile.getString("build-training-models/paragraph.txt");
+		String wholeText = "Neil Alden Armstrong (August 5, 1930 – August 25, 2012) was an American astronaut and the first person to walk on the Moon. He was also an aerospace engineer, naval aviator, test pilot, and university professor. Before becoming an astronaut, Armstrong was an officer in the U.S. Navy and served in the Korean War. ";
 		OpennlpChunTrainDataCreator ctdo = new OpennlpChunTrainDataCreator();
 		ctdo.generateChunkerTrainData(wholeText);
 	}
