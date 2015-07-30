@@ -1,19 +1,23 @@
 package opennlp.source.sentencer.executor;
 
-import java.io.InputStream;
+import java.io.FileInputStream;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import core.util.Config;
 import core.util.ReadTxtFile;
-import opennlp.source.phraser.ConceptExtractor;
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
 
 public class SentenceDetector {
-	private static final InputStream modelInSentence;
+	private static final Logger LOG = LoggerFactory.getLogger(SentenceDetector.class);
 	private static SentenceModel sentenceModel;
 
 	static {
-		modelInSentence = ConceptExtractor.class.getResourceAsStream("/opennlp/en-sent.bin");
 		try {
-			sentenceModel = new SentenceModel(modelInSentence);
+			sentenceModel = new SentenceModel(new FileInputStream(Config.getModelDataPath() + "en-sent.bin"));
+			LOG.info("Sentence model has been loaded from " + Config.getModelDataPath() + "en-sent.bin");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -22,7 +26,7 @@ public class SentenceDetector {
 	public static String[] getSentences(String input) {
 		SentenceDetectorME sentenceDetector = new SentenceDetectorME(sentenceModel);
 		String sentences[] = sentenceDetector.sentDetect(input);
-//		String sentences[] = input.split("[,.:;?\"()\u201D]");
+		// String sentences[] = input.split("[,.:;?\"()\u201D]");
 		return sentences;
 	}
 
@@ -32,10 +36,10 @@ public class SentenceDetector {
 		String[] sentences = getSentences(ReadTxtFile.getString("build-training-models/TextFromBook.txt"));
 		int count = 0;
 		for (String string : sentences) {
-			count ++;
-			System.out.println(string);	
+			count++;
+			System.out.println(string);
 		}
 		System.out.println(count);
-		
+
 	}
 }
