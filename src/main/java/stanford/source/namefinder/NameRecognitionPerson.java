@@ -10,7 +10,7 @@ import edu.stanford.nlp.ie.crf.CRFClassifier;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.util.Triple;
 
-public class NameRecognition {
+public class NameRecognitionPerson {
 	private static final AbstractSequenceClassifier<CoreLabel> classifier;
 
 	static {

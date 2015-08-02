@@ -5,3 +5,5 @@ user
 ways
 way
 person
+day
+days

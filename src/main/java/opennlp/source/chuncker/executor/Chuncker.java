@@ -38,14 +38,15 @@ public class Chuncker {
 
 		try {
 			chunkerModel = new ChunkerModel(modelInChunker);
+			LOG.info("Chunker model has been loaded from " + Config.getModelDataPath() + "en-chunker.bin");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public static Map<String, String> getPhrases() throws IOException {
-		String input = "Neil Alden Armstrong (August 5, 1930 – August 25, 2012) was an common American astronaut and the first person to walk on the Moon. He was also an aerospace engineer, naval aviator, test pilot, and university professor. Before becoming an astronaut, Armstrong was an officer in the U.S. Navy and served in the Korean War. ";
-//		String input = ReadTxtFile.getString("build-training-models/paragraph.txt");
+//		String input = "I like to learn natural language processing and artificial intellegence";
+		String input = ReadTxtFile.getString("build-training-models/paragraph.txt");
 
 		ChunkerME chunkerME = new ChunkerME(chunkerModel);
 
