@@ -1,7 +1,9 @@
 package opennlp.source.conditional.chunker;
 
-public class CoreMyLabel {
+public class CoreLabel {
 	private String word;
+	private String token;
+	
 
 	public String getWord() {
 		return word;
@@ -19,16 +21,14 @@ public class CoreMyLabel {
 		this.token = token;
 	}
 
-	private String token;
-
-	public CoreMyLabel(String word, String token) {
+	public CoreLabel(String word, String token) {
 		this.word = word.toLowerCase();
 		this.token = token;
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
-		return word.equals(((CoreMyLabel)obj).word);
+		return word.equals(((CoreLabel)obj).word);
 	}
 	
 	@Override

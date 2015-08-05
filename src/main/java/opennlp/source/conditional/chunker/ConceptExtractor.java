@@ -1,126 +1,134 @@
 package opennlp.source.conditional.chunker;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import core.util.Config;
+import core.util.ReadTxtFile;
+import core.util.WriteFile;
+import opennlp.source.conditional.util.Sentencer;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSTaggerME;
-import opennlp.tools.sentdetect.SentenceDetectorME;
-import opennlp.tools.sentdetect.SentenceModel;
-import opennlp.tools.tokenize.TokenizerME;
-import opennlp.tools.tokenize.TokenizerModel;
 import opennlp.tools.util.InvalidFormatException;
 
-
-public class ConceptExtractor{
-
-	private static final InputStream modelInParse;
-	private static final InputStream modelInSentence;
-	private static final InputStream modelInTokenizer;
-	private static final ComboundWorExtractor comboundWordExt = new ComboundWorExtractor();
+public class ConceptExtractor {
+	private static final Logger LOG = LoggerFactory.getLogger(ConceptExtractor.class);
+	private static InputStream modelInParse;
 	private static POSModel posModel;
-	private static SentenceModel sentenceModel;
-	private static TokenizerModel tokenModel;
 	private static final HashMap<String, String> FILTER;
+	private static final Set<String> SYMBOLS = new HashSet<String>();
 
 	static {
-		modelInParse = ConceptExtractor.class.getResourceAsStream("/opennlp/en-pos-maxent.bin");
-		modelInSentence = ConceptExtractor.class.getResourceAsStream("/opennlp/en-sent.bin");
-		modelInTokenizer = ConceptExtractor.class.getResourceAsStream("/opennlp/en-token.bin");
+		try {
+			modelInParse = new FileInputStream(Config.getModelDataPath() + "en-pos.bin");
+			posModel = new POSModel(modelInParse);
+			LOG.info("Chunker model has been loaded from " + Config.getModelDataPath() + "en-pos.bin");
+
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (InvalidFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		FILTER = new HashMap<String, String>();
 		FILTER.put("NNP", null);
 		FILTER.put("NN", null);
 		FILTER.put("NNS", null);
-		FILTER.put("JJ", null);
 
-		try {
-			posModel = new POSModel(modelInParse);
-			sentenceModel = new SentenceModel(modelInSentence);
-			tokenModel = new TokenizerModel(modelInTokenizer);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		SYMBOLS.add("$");
+		SYMBOLS.add("%");
+		SYMBOLS.add("*");
+		SYMBOLS.add("~");
+		SYMBOLS.add("-");
+		SYMBOLS.add(",");
+		SYMBOLS.add("!");
+		SYMBOLS.add("©");
+		SYMBOLS.add("’");
+		SYMBOLS.add("‘");
+		SYMBOLS.add("—");
 	}
 
-	private static List<String> getSentences(String content) {
-		String sentences[];
-		List<String> listOfsentences = new ArrayList<String>();
+	public static Set<String> getConcept(String page) throws InvalidFormatException, IOException {
+		Set<String> phrases = new HashSet<String>();
+		Set<String> sentences = Sentencer.getSentences(page);
 
-		try {
-			SentenceDetectorME sd = new SentenceDetectorME(sentenceModel);
-			sentences = sd.sentDetect(content);
-		} catch (Exception e) {
-			System.out.println("Error in : " + content);
-			throw new RuntimeException(e);
-		}
-
-		//TODO Here I assumed the sentence will only have one open and closed bracket. But in Actual
-		//Case sentence may have more than one open and close bracket. So that need to be fixed.
 		for (String sentence : sentences) {
-			if (sentence.contains("(")) {
-				int strBracket = sentence.indexOf('(');
-				int endBracket = sentence.indexOf(')');
-				listOfsentences.add(sentence.substring(strBracket+1,endBracket));
-				listOfsentences.add((sentence.substring(0,strBracket).concat(sentence.substring(endBracket+1,sentence.length()-1))));
-			}else{
-				listOfsentences.add(sentence);
-			}
+			phrases.addAll(getParser(sentence));
 		}
-		
-		return listOfsentences;
+
+		return phrases;
 	}
 
+	private static Set<String> getParser(String sentence) throws InvalidFormatException, IOException {
 
-	private static Map<String, String> getParser(String input) throws InvalidFormatException, IOException {
-		
-		TokenizerME tokenizer = new TokenizerME(tokenModel);
 		POSTaggerME tagger = new POSTaggerME(posModel);
-		
-		List<CoreMyLabel> myList = new ArrayList<CoreMyLabel>();
 
-		String tokenedWords[] = tokenizer.tokenize(input);
-		String [] tags = tagger.tag(tokenedWords);
-		
-		for (int i = 0; i < tokenedWords.length; i++) {
-			myList.add(new CoreMyLabel(tokenedWords[i], tags[i]));
-			System.out.println(tokenedWords[i]+ " "+ tags[i]);
-		}
+		Set<String> unique = new HashSet<String>();
 
-		List<CoreMyLabel> tagListComp = comboundWordExt.generatePhrases((ArrayList<CoreMyLabel>) myList);
-		Map<String, String> unique = new HashMap<String, String>();
+		List<CoreLabel> coreLabel = new ArrayList<CoreLabel>();
 
 		/**
-		 * Extract Only NN, NNP and NNS from the total list and if tag is 0 then
-		 * change the tag name as CONCEPT
+		 * rather than using whitespace tokenizer we can go for whitespace
+		 * splitter.
 		 */
+		String tokenedWords[] = sentence.split(" ");
+
+		String[] tags = tagger.tag(tokenedWords);
+
+		for (int i = 0; i < tokenedWords.length; i++) {
+			coreLabel.add(new CoreLabel(tokenedWords[i], tags[i]));
+		}
+
+		List<CoreLabel> tagListComp = ComboundWorExtractor.generatePhrases((ArrayList<CoreLabel>) coreLabel);
 
 		for (int i = 0; i < tagListComp.size(); i++) {
-			CoreMyLabel coreMyLabel = tagListComp.get(i);
-			//Here I'm only adding if the word count greater than 2 split by space.
-			if (FILTER.containsKey(coreMyLabel.getToken()) && coreMyLabel.getWord().split("\\s").length > 1 ) {
-				unique.put(coreMyLabel.getWord(), coreMyLabel.getToken());
+			CoreLabel coreMyLabel = tagListComp.get(i);
+			if (isValidPhrase(coreMyLabel)) {
+				unique.add(coreMyLabel.getWord().trim());
 			}
 		}
+
 		return unique;
 	}
 
-	public Map<String, String> getConcept(String input) throws InvalidFormatException, IOException {
-		Map<String, String> map = new HashMap<String, String>();
+	/**
+	 * This is the acceptance condition for phrases.
+	 * 
+	 * @param coreLabel
+	 * @return
+	 */
+	private static boolean isValidPhrase(CoreLabel coreLabel) {
 
-			List<String> sentences = getSentences(input);
-			for (String string : sentences) {
-				System.out.println(string);
+		if (FILTER.containsKey(coreLabel.getToken())) {
+
+			String[] terms = coreLabel.getWord().split(" ");
+
+			if (terms.length > 5) {
+				return false;
 			}
-			for (String sentence : sentences) {
-				if (!sentence.equals("")) {
-					map.putAll(getParser(sentence));
+
+			for (String term : terms) {
+				if (term.length() < 3 || SYMBOLS.contains(Character.toString(term.charAt(0)))
+						|| SYMBOLS.contains(Character.toString(term.charAt(term.length() - 1)))) {
+					return false;
 				}
 			}
 
-		return map;
+			return true;
+		}
+
+		return false;
 	}
 }
