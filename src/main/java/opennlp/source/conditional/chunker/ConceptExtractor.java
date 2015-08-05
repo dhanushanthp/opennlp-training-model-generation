@@ -1,4 +1,4 @@
-package opennlp.source.phraser;
+package opennlp.source.conditional.chunker;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import core.util.readFile;
+import opennlp.source.conditional.chunker.ConceptExtractor;
 import opennlp.tools.util.InvalidFormatException;
 
 public class ConceptExtractorTest {

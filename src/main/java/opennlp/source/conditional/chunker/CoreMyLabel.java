@@ -1,4 +1,4 @@
-package opennlp.source.phraser;
+package opennlp.source.conditional.chunker;
 
 public class CoreMyLabel {
 	private String word;
