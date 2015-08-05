@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import core.util.Config;
+import core.util.ReadTxtFile;
 import opennlp.source.chuncker.trainer.TokenObject;
 import opennlp.source.tokenizer.executor.Tokenizer;
 import opennlp.tools.postag.POSModel;
@@ -44,7 +45,6 @@ public class PosExecutor {
 	}
 
 	public static ResponseObject getPOSTags(String sentence) throws InvalidFormatException, IOException {
-
 		POSTaggerME tagger = new POSTaggerME(model);
 		String[] tokens = Tokenizer.getTokens(sentence);
 		String tags[] = tagger.tag(tokens);
@@ -52,5 +52,12 @@ public class PosExecutor {
 		ResponseObject response = new ResponseObject(tokens, tags);
 
 		return response;
+	}
+
+	public static void main(String[] args) throws InvalidFormatException, IOException {
+		ResponseObject result = getPOSTags(ReadTxtFile.getString("build-training-models/paragraph.txt"));
+		for (int i = 0; i < result.getTags().length; i++) {
+			System.out.println(result.getTokens()[i] +  "_"+result.getTags()[i]);
+		}
 	}
 }
