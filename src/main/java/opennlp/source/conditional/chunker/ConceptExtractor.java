@@ -5,15 +5,19 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import core.util.Config;
+import core.util.LoadStopWords;
 import core.util.ReadTxtFile;
 import core.util.WriteFile;
 import opennlp.source.conditional.util.Sentencer;
@@ -27,13 +31,16 @@ public class ConceptExtractor {
 	private static POSModel posModel;
 	private static final HashMap<String, String> FILTER;
 	private static final Set<String> SYMBOLS = new HashSet<String>();
+	private static Set<String> stopWords;
 
 	static {
+		StopWatch s = new StopWatch();
+		s.start();
 		try {
 			modelInParse = new FileInputStream(Config.getModelDataPath() + "en-pos.bin");
 			posModel = new POSModel(modelInParse);
-			LOG.info("Chunker model has been loaded from " + Config.getModelDataPath() + "en-pos.bin");
-
+			LOG.info("POS model has been loaded from " + Config.getModelDataPath() + "en-pos.bin");
+			stopWords = LoadStopWords.getAllStopWords();
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		} catch (InvalidFormatException e) {
@@ -58,6 +65,9 @@ public class ConceptExtractor {
 		SYMBOLS.add("’");
 		SYMBOLS.add("‘");
 		SYMBOLS.add("—");
+		s.stop();
+
+		System.out.println("Library Loading duration : " + s.getTime());
 	}
 
 	public static Set<String> getConcept(String page) throws InvalidFormatException, IOException {
@@ -113,11 +123,23 @@ public class ConceptExtractor {
 
 		if (FILTER.containsKey(coreLabel.getToken())) {
 
-			String[] terms = coreLabel.getWord().split(" ");
-
-			if (terms.length > 5) {
+			if (coreLabel.getWord().trim().equals("")) {
 				return false;
 			}
+
+			String[] terms = coreLabel.getWord().split(" ");
+
+			int count = 0;
+			for (String term : terms) {
+				if (stopWords.contains(term.toLowerCase())) {
+					count++;
+				}else{
+					break;
+				}
+			}
+			
+			terms = Arrays.copyOfRange(terms, count, terms.length);
+			coreLabel.setWord(StringUtils.join(terms," "));
 
 			for (String term : terms) {
 				if (term.length() < 3 || SYMBOLS.contains(Character.toString(term.charAt(0)))
@@ -125,7 +147,11 @@ public class ConceptExtractor {
 					return false;
 				}
 			}
-
+			
+			if (terms.length > 5) {
+				return false;
+			}
+			
 			return true;
 		}
 

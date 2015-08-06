@@ -7,3 +7,5 @@ way
 person
 day
 days
+figure
+big

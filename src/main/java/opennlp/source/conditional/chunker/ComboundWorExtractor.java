@@ -29,6 +29,8 @@ public class ComboundWorExtractor {
 		baseCheck = new HashMap<String, String>();
 		subCheck = new HashMap<String, String>();
 		baseCheck.put("JJ", "");
+		baseCheck.put("VBD", "");
+		baseCheck.put("VBG", "");
 		baseCheck.put("NNP", "");
 		baseCheck.put("NN", "");
 		baseCheck.put("NNS", "");
