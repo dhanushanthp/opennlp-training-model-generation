@@ -28,7 +28,10 @@ public class CreateTrainingDataMain {
 				String[] sentences = SentenceDetector.getSentences(text);
 				for (String sentence : sentences) {
 					String result = CreateTrainingData.getOpenNLPTaggedText(sentence, Config.getNERTrainingEntity());
-					WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-ner-person.train", result);
+					// Write to file, if the sentence contains name.
+					if(result.contains("<START:")){
+						WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-ner-person.train", result);						
+					}
 				}
 			}
 		});
