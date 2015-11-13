@@ -56,9 +56,10 @@ public class CreateTrainingData {
 		 */
 		String result = sb.toString().replace("  ", " ");
 		LOG.debug("Result String : " + result);
-		return result;
+		return result.trim();
 	}
 }
+
 
 class Data {
 	private int start;
