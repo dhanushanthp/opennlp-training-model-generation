@@ -3,6 +3,7 @@ package opennlp.source.namefinder.trainer;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,14 +25,18 @@ public class CreateTrainingDataMain {
 				LOG.debug("processing : " + filePath.toString().replace(Config.getTextSourcePath(), ""));
 
 				// Read XML and get pure text
-				String text = ReadTxtFile.getXmlExtString(filePath.toString());
-				String[] sentences = SentenceDetector.getSentences(text);
-				for (String sentence : sentences) {
-					String result = CreateTrainingData.getOpenNLPTaggedText(sentence, Config.getNERTrainingEntity());
-					// Write to file, if the sentence contains name.
-					if(result.contains("<START:")){
-						WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-ner-person.train", result);						
+				List<String> docs = ReadTxtFile.getXmlExtStringList(filePath.toString());
+				
+				for (String doc : docs) {
+					String[] sentences = SentenceDetector.getSentences(doc);
+					for (String sentence : sentences) {
+						String result = CreateTrainingData.getOpenNLPTaggedText(sentence, Config.getNERTrainingEntity());
+						// Write to file, if the sentence contains name.
+						if(result.contains("<START:")){
+							WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-ner-person.train", result);						
+						}
 					}
+					WriteFile.writeDataWithoutOverwrite(Config.getTrainDataPath() + "en-ner-person.train", "");
 				}
 			}
 		});

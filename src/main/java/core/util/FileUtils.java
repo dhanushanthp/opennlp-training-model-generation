@@ -13,4 +13,18 @@ public class FileUtils {
 		File direc = new File(direcPath);
 		direc.mkdirs();
 	}
+	
+	public static String textCleaning(String input) {
+		String result = removeHyphenNextLine(input);
+		result = removeUnknownSymble(result);
+		return result;
+	}
+
+	private static String removeHyphenNextLine(String input) {
+		return input.replace("- ", "");
+	}
+
+	private static String removeUnknownSymble(String input) {
+		return input.replace("■ ", "");
+	}
 }

@@ -19,6 +19,7 @@ import opennlp.tools.namefind.NameSampleDataStream;
 import opennlp.tools.namefind.TokenNameFinderModel;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
+import opennlp.tools.util.TrainingParameters;
 
 public class NameModelBuilder {
 	private static final Logger LOG = LoggerFactory.getLogger(NameModelBuilder.class);
@@ -40,7 +41,7 @@ public class NameModelBuilder {
 
 		try {
 			LOG.info("Loading training data from  : " + Config.getTrainDataPath() + "en-ner-" + Config.getNERTrainingEntity() + ".train");
-			model = NameFinderME.train("en", Config.getNERTrainingEntity(), objectStream, Collections.<String, Object> emptyMap(), 80, 5);
+			model = NameFinderME.train("en", Config.getNERTrainingEntity(), objectStream, Collections.<String, Object> emptyMap());
 			LOG.info("Loading training data completed");
 		} finally {
 			objectStream.close();
