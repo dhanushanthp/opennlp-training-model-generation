@@ -33,6 +33,16 @@ public class Tokenizer {
 		String tokens[] = tokenizer.tokenize(sentence);
 		return tokens;
 	}
+	
+	public static String getTokenizedSentence(String sentence) throws InvalidFormatException, IOException {
+		StringBuffer sb = new StringBuffer();
+		TokenizerME tokenizer = new TokenizerME(tokenModel);
+		String tokens[] = tokenizer.tokenize(sentence);
+		for (String token : tokens) {
+			sb.append(token + " ");
+		}
+		return sb.toString().trim();
+	}
 
 	public static void main(String[] args) {
 		try {
