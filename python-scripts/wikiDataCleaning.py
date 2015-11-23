@@ -52,8 +52,7 @@ def process_content():
             and (" by <START:" not in x)
             and ("<END> and " not in x) 
             and ("<START:" not in x[0:7]) 
-            and (" <END> (" not in x)
-            and ("<START:person>" in x)): 
+            and (" <END> (" not in x)): 
                 write_line(x, _train_data_output);
                 print(x);
 
@@ -65,5 +64,5 @@ def process_content_individual():
                 write_line(x, _train_data_output);
                 print(x);
 
-# process_content();
-process_content_individual();
+process_content();
+# process_content_individual();
