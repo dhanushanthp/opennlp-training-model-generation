@@ -1,3 +1,5 @@
+_train_data_source = "/opt/data-extractor/data/open-nlp-train/en-ner-person.train-default";
+_train_data_output = "/opt/data-extractor/data/open-nlp-train/en-ner-person.train";
 
 def write_line(text,file_name):
     with open(file_name, "a") as file:
@@ -10,7 +12,7 @@ def read_line(file_name):
     return lines;
 
 def process_content():
-    lines = read_line("/opt/data-extractor/data/open-nlp-train/en-ner-person.train-default");
+    lines = read_line(_train_data_source);
     for x in lines:
         if (("between <START:person>" not in x) 
             and ("0 <START" not in x)
@@ -51,15 +53,15 @@ def process_content():
             and ("<END> and " not in x) 
             and ("<START:" not in x[0:7]) 
             and (" <END> (" not in x)): 
-                write_line(x, "/opt/data-extractor/data/open-nlp-train/en-ner-person.train");
+                write_line(x, _train_data_output);
                 print(x);
 
 def process_content_individual():
-    lines = read_line("/opt/data-extractor/data/open-nlp-train/en-ner-person.train-default");
+    lines = read_line(_train_data_source);
     for x in lines:
         if ((" from <START" in x) 
             or ("of <START" in x)): 
-                write_line(x, "/opt/data-extractor/data/open-nlp-train/en-ner-person-special.train");
+                write_line(x, _train_data_output);
                 print(x);
 
 # process_content();
