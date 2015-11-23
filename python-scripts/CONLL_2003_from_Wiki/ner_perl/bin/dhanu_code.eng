@@ -1,0 +1,17 @@
+cd data
+
+DIR="../etc"
+
+#echo "removing all xml codes..."
+#../bin/xml2txt.eng *.xml
+
+echo "tokenizing..."
+for file in `ls *.txt|sort -n`
+do
+   echo "read each file."
+   cat $DIR/files.head $file | ../bin/tokenize.eng
+done |\
+   paste -d' ' - $DIR/tags.eng |\
+   (sed 's/^ *$//';echo) > tokenized
+
+head -219554 tokenized > ../eng.train
