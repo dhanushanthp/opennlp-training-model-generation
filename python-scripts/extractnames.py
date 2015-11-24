@@ -38,11 +38,26 @@ def mainCountUnique():
     print ('#############################################')
     print('Total Number of Sentence : ', len(sentences))
     print ('#############################################')
+
+def main():
+    option_nom = input("Enter the option : \n")
+    option_num = int(option_nom)
+    if option_num > 2 :
+        print("Option not available \n")
+        main();
+    else:
+        if option_num == 1:
+            mainCountUnique();
+        elif option_num == 2:
+            mainCreateNameList();
+            mainCountUnique();
+        print('Completed...');
     
 def addNames(names):
     for name in names:
         write_line(name + '\n', _train_data_output);
     
 if __name__ == '__main__':
-    mainCountUnique();
-            
+    print ('Press 1 :  Check the total number of Unique names.');
+    print ('Press 2 :  Create the Unique names list in file : ' + _train_data_output);
+    main();            
